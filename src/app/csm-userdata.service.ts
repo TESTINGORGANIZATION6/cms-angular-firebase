@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, isObservable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { NgxSpinnerService } from "ngx-spinner";
 
 @Injectable({

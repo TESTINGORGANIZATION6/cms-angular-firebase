@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CmsLoginComponent } from './cms-login/cms-login.component';
 import { CmsDashboardComponent } from './cms-dashboard/cms-dashboard.component';
-import { PlayersComponent } from './cms-dashboard/players/players.component';
-import { CoachesComponent } from './cms-dashboard/coaches/coaches.component';
-import { TeamsComponent } from './cms-dashboard/teams/teams.component';
-import { ClubsComponent } from './cms-dashboard/clubs/clubs.component';
-import { ActivitiesComponent } from './cms-dashboard/activities/activities.component';
+// import { PlayersComponent } from './cms-dashboard/players/players.component';
+// import { CoachesComponent } from './cms-dashboard/coaches/coaches.component';
+// import { TeamsComponent } from './cms-dashboard/teams/teams.component';
+// import { ClubsComponent } from './cms-dashboard/clubs/clubs.component';
+// import { ActivitiesComponent } from './cms-dashboard/activities/activities.component';
 import { PortfolioDashboardComponent } from './portfolio-dashboard/portfolio-dashboard.component';
 import { RegisterAdminComponent } from './register-admin/register-admin.component';
 

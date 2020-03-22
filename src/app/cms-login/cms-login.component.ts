@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as UsersEnums from './cms-login-enum';
 import {CsmUserdataService} from '../csm-userdata.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import {environment} from '../../environments/environment';
 @Component({
   selector: 'app-cms-login',

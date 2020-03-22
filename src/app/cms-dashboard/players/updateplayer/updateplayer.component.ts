@@ -15,9 +15,7 @@ export class UpdateplayerComponent implements OnInit{
   constructor() { }
 
   ngOnInit() {
-    if(this.createNew){
-
-    }else{
+    if(!this.createNew){
       this.fillUserForm();
     }
 

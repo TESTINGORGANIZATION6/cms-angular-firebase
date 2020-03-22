@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule, MatButtonModule, MatSelectModule, MatIconModule } from '@angular/material';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CmsLoginComponent } from './cms-login/cms-login.component';
 import { CmsDashboardComponent } from './cms-dashboard/cms-dashboard.component';
 import { CmsHeaderComponent } from './cms-header/cms-header.component';
@@ -59,9 +59,8 @@ import { RegisterAdminComponent } from './register-admin/register-admin.componen
     HttpClientModule,
     MatTooltipModule,
     NgxSpinnerModule,
-    
-
-  ],
+    ReactiveFormsModule
+    ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [{
     provide: HTTP_INTERCEPTORS,
