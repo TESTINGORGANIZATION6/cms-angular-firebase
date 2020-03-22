@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {CsmUserdataService} from '../../csm-userdata.service';
 import * as UsersEnums from '../../cms-login/cms-login-enum';
+import {environment} from '../../../environments/environment';
+
 
 @Component({
   selector: 'app-players',
@@ -8,7 +10,7 @@ import * as UsersEnums from '../../cms-login/cms-login-enum';
   styleUrls: ['./players.component.scss']
 })
 export class PlayersComponent implements OnInit {
-  userData=[];
+ @Input() userData=[];
   playerData:any=[];
   usersEnums = UsersEnums;
   updateplayer=false;
@@ -21,28 +23,21 @@ export class PlayersComponent implements OnInit {
   constructor(private csmUserdataService: CsmUserdataService) { }
 
 
-  ngOnInit() {
-    // if(this.appName=='portfolio'){
-    //   this.title='Portfolio players';
-    //   this.showCreatePlayer=false;
-    // }else{
-    //   this.title='Players';
-    //   this.showCreatePlayer=true;
-    // }
+  ngOnInit() { 
     this.getAllplayers();
   }
 
-  SetSortingOptions(){
+  SetSortingOptions(sortBy){
 // sort columns logic
   }
   getAllplayers(){
-const url = this.usersEnums.UsersWebApis.dummyData;
-this.csmUserdataService.getJSON(url).subscribe(data => {
-  if (data != ""){
-    this.playerData = data.userdata.Players;
-    this.teams=data.userdata.teams;
-  }
-})
+    const url = environment.apiHost + this.usersEnums.UsersWebApis.Getplayers+'/'+ this.userData['_id'];
+    this.csmUserdataService.AdminPortalGetApi(url, null).subscribe(data => {
+      if (data != ""){
+         this.playerData = data;
+        // this.teams=data.userdata.teams;  
+      }
+    })
   }
 
   CreatePlayer() {
@@ -54,7 +49,7 @@ this.csmUserdataService.getJSON(url).subscribe(data => {
     this.createNewPlayer = false;
     this.editplayer = playerinfo;
   }
-  BackBtnClicked(){
+  BackBtnClicked(event){
     this.updateplayer = false;
   }
 }

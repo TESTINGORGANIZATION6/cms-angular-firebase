@@ -1,14 +1,16 @@
 export enum UsersWebApis {
-  // GetUsersList = 'api/user/getall',
+  signup= '/signup',
+  login= '/signin',
+  Getplayers = '/getplayers',
+  getCoaches='/getcoaches',
   // ActivateDeactivateUser = 'api/user/activatedeactivate',
   // GetPlatformTypes = 'api/user/getplatforms',
   // AddUser = 'api/user/create',
   // UpdateUser = 'api/user/update',
-  // GetUserDetails = 'api/user/get',
   // GetOrganizationTypes = 'api/organization/getalltypes',
   // GetOrganizationsByType = 'api/organization/getbytype',
   // GetAllTenants = 'api/tenant/getalltenants',
-  // getRoles='api/user/getroles',
+  getPlayers='getplayers',
   // getOrganization='api/organization/getorganizationbyhierarchy',
   dummyData='../assets/userdata.json'
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CsmUserdataService } from '../../csm-userdata.service';
 import * as UsersEnums from '../../cms-login/cms-login-enum';
 @Component({
@@ -8,6 +8,7 @@ import * as UsersEnums from '../../cms-login/cms-login-enum';
 })
 export class TeamsComponent implements OnInit {
   teamData = [];
+  @Input() userData=[];
   usersEnums = UsersEnums
   isteamedit=false;
   constructor(private csmUserdataService: CsmUserdataService) { }
@@ -16,7 +17,7 @@ export class TeamsComponent implements OnInit {
     this.getAllteams();
   }
 
-  SetSortingOptions() {
+  SetSortingOptions(sortBy) {
     // sort columns logic
   }
   getAllteams() {

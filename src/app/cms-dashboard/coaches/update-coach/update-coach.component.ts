@@ -10,12 +10,13 @@ export class UpdateCoachComponent implements OnInit {
   @Input() teams: any;
   @Input() coachData: any;
   @Output() BackBtn: EventEmitter<any> = new EventEmitter<any>();
+  submitted=false;
   constructor() { }
 
   ngOnInit() {
     this.fillUserForm();
   }
-  SaveUser() {
+  SaveUser(form) {
 
   }
 

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import {CsmUserdataService} from '../../csm-userdata.service';
 import * as UsersEnums from '../../cms-login/cms-login-enum';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-coaches',
@@ -8,7 +9,8 @@ import * as UsersEnums from '../../cms-login/cms-login-enum';
   styleUrls: ['./coaches.component.scss']
 })
 export class CoachesComponent implements OnInit {
-  coachData=[];
+  coachData:any=[];
+  @Input() userData=[];
   usersEnums=UsersEnums;
   editCoach=false;
   coachdata:any;
@@ -19,16 +21,16 @@ export class CoachesComponent implements OnInit {
     this.getAllcoaches();
   }
 
-  SetSortingOptions(){
+  SetSortingOptions(sortBy){
 // sort columns logic
   }
 
   getAllcoaches(){
-    const url = this.usersEnums.UsersWebApis.dummyData;
-    this.csmUserdataService.getJSON(url).subscribe(data => {
-      if(data != ""){
-        this.coachData = data.userdata.coaches;
-        this.teams=data.userdata.teams;
+    const url = environment.apiHost + this.usersEnums.UsersWebApis.getCoaches+'/'+ this.userData['_id'];
+    this.csmUserdataService.AdminPortalGetApi(url, null).subscribe(data => {
+      if(data){
+         this.coachData = data;
+        // this.teams=data.userdata.te  ams;
       }
     })
       }
@@ -37,7 +39,7 @@ export class CoachesComponent implements OnInit {
       this.coachdata=coachData;
       this.editCoach=true;
       }
-      BacktoCoachlist(){
+      BacktoCoachlist(event){
         this.editCoach=false;
       }
 }

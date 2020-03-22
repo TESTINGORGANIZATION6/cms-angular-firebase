@@ -23,7 +23,7 @@ export class UpdateplayerComponent implements OnInit{
 
   }
 
-  SaveUser(){
+  SaveUser(form){
 
   }
   Cancel(){
@@ -31,11 +31,11 @@ this.BackBtn.emit(true);
   }
   fillUserForm(){
     this.user={
-      firstName:this.playerData.Name,
+      firstName:this.playerData.firstname,
       lastName:this.playerData.lastname,
       age:this.playerData.age,
       email:this.playerData.email,
-      team:this.teams.find(o => o.Name === this.playerData.team).id,
+      // team:this.teams.find(o => o.Name === this.playerData.team).id,
       position:this.playerData.position,
     }
 // this.user.firstName=this.playerData.Name;

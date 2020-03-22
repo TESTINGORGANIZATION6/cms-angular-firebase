@@ -1,7 +1,7 @@
 <app-cms-header [isclub]='true' (activetab)='checkActiveTab($event)' ></app-cms-header>
 <!-- <router-outlet></router-outlet> -->
- <app-teams *ngIf="showActiveTab== 'teams'"></app-teams>
- <app-players *ngIf="showActiveTab== 'players'" ></app-players>
- <app-coaches *ngIf="showActiveTab== 'coaches'"></app-coaches>
- <app-clubs *ngIf="showActiveTab== 'clubs'"></app-clubs>
- <app-activities *ngIf="showActiveTab== 'activities'"></app-activities>
+ <app-teams *ngIf="showActiveTab== 'teams'" [userData]='userData'></app-teams>
+ <app-players *ngIf="showActiveTab== 'players'" [userData]='userData' ></app-players>
+ <app-coaches *ngIf="showActiveTab== 'coaches'" [userData]='userData'></app-coaches>
+ <app-clubs *ngIf="showActiveTab== 'clubs'" ></app-clubs>
+ <app-activities *ngIf="showActiveTab== 'activities'" [userData]='userData'></app-activities>

@@ -15,7 +15,7 @@ usersEnums=UsersEnums
   ngOnInit() {
     this.getAllrecruters();
   }
-  SetSortingOptions(){
+  SetSortingOptions(sortBy){
 
   }
   getAllrecruters(){

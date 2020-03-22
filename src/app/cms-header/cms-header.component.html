@@ -20,9 +20,9 @@
 <li *ngIf="!isclub"  class="{{activeTab =='users'?'active':''}}">
   <a   (click)="loadTabs('users','portfolio')"  href="javascript:void(0);" >players</a>
 </li>
-<li *ngIf="!isclub"  class="{{activeTab =='recruiters'?'active':''}}">
+<!-- <li *ngIf="!isclub"  class="{{activeTab =='recruiters'?'active':''}}">
   <a   (click)="loadTabs('recruiters', 'portfolio')"  href="javascript:void(0);" >Recruiters</a>
-</li>
+</li> -->
 </ul>
 <!-- <button type="button" class="btn btn-light m-2">LOGOUT</button> -->
 <span class="logoutBtn" (click)='logOut()'>LOGOUT</span>

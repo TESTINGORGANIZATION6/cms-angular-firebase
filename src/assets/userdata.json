@@ -179,7 +179,7 @@
 
   },
   "portfolioData":{
-    "players":[
+    "users":[
       {
         "Name": "Swapnil",
         "lastname":"rabse",
@@ -204,7 +204,7 @@
         "Name": "prachit",
         "lastname":"patil",
         "age": "25",
-        "role":"player",
+        "role":"coach",
         "email":"ppatil@gmail.com",
         "createdDate":"2/2/2020",
         "isActive":true,
@@ -214,7 +214,7 @@
         "Name": "sagar",
         "lastname":"patil",
         "age": "26",
-        "role":"player",
+        "role":"manager",
         "email":"spatil0@gmail.com",
         "createdDate":"2/2/2020",
         "isActive":true,
@@ -224,64 +224,13 @@
         "Name": "sid",
         "lastname":"prajapati",
         "age": "26",
-        "role":"player",
-        "email":"sid@gmail.com",
-        "createdDate":"2/2/2020",
-        "isActive":false,
-        "username":"sid" 
-      }
-    ],
-    "scouts":[
-      {
-        "Name": "Swapnil",
-        "lastname":"rabse",
-        "age": "26",
-        "club":"cluba",
-        "email":"swapnil@gmail.com",
-        "createdDate":"2/2/2020",
-        "isActive":true,
-        "username":"swap"      
-      },
-      {
-        "Name": "Deepak",
-        "lastname":"pawar",
-        "age": "24",
-        "club":"clubB",
-        "email":"deepak@gmail.com",
-        "createdDate":"2/2/2020",
-        "isActive":false,
-        "username":"deep" 
-      },
-      {
-        "Name": "prachit",
-        "lastname":"patil",
-        "age": "25",
-        "club":"clubC",
-        "email":"ppatil@gmail.com",
-        "createdDate":"2/2/2020",
-        "isActive":true,
-        "username":"ppatil" 
-      },
-      {
-        "Name": "sagar",
-        "lastname":"patil",
-        "age": "26",
-        "club":"clubD",
-        "email":"spatil0@gmail.com",
-        "createdDate":"2/2/2020",
-        "isActive":true,
-        "username":"dragon" 
-      },
-      {
-        "Name": "sid",
-        "lastname":"prajapati",
-        "age": "26",
-        "club":"clubE",
+        "role":"scout",
         "email":"sid@gmail.com",
         "createdDate":"2/2/2020",
         "isActive":false,
         "username":"sid" 
       }
     ]
+    
 }
 }

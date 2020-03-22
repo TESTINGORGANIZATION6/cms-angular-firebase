@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CsmUserdataService } from '../../csm-userdata.service';
 import * as UsersEnums from '../../cms-login/cms-login-enum';
 
@@ -9,6 +9,7 @@ import * as UsersEnums from '../../cms-login/cms-login-enum';
 })
 export class ActivitiesComponent implements OnInit {
   ActivitiesData = [];
+  @Input() userData=[];
   usersEnums = UsersEnums
   constructor(private csmUserdataService: CsmUserdataService) { }
 
@@ -16,7 +17,7 @@ export class ActivitiesComponent implements OnInit {
     this.getAllactivities();
   }
 
-  SetSortingOptions(){
+  SetSortingOptions(sortBy){
 
   }
   getAllactivities() {

@@ -8,6 +8,7 @@ import { TeamsComponent } from './cms-dashboard/teams/teams.component';
 import { ClubsComponent } from './cms-dashboard/clubs/clubs.component';
 import { ActivitiesComponent } from './cms-dashboard/activities/activities.component';
 import { PortfolioDashboardComponent } from './portfolio-dashboard/portfolio-dashboard.component';
+import { RegisterAdminComponent } from './register-admin/register-admin.component';
 
 const routes: Routes = [
   { path: '', component: CmsLoginComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
     // ]
   },
   { path: 'portfolio', component: PortfolioDashboardComponent },
+  { path: 'admin/register', component: RegisterAdminComponent },
 ];
 
 @NgModule({

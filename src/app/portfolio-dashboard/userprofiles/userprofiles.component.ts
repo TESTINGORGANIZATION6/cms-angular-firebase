@@ -15,14 +15,14 @@ export class UserprofilesComponent implements OnInit {
     this.getAllplayers();
   }
 
-  SetSortingOptions(){
+  SetSortingOptions(sortBy){
 
   }
   getAllplayers(){
     const url = this.usersEnums.UsersWebApis.dummyData;
     this.portfolioservice.getJSON(url).subscribe(data => {
       if (data != ""){
-        this.userdata = data.portfolioData.players;
+        this.userdata = data.portfolioData.users;
         // this.teams=data.userdata.teams;
       }
     })

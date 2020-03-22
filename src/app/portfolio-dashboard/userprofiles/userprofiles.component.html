@@ -42,7 +42,7 @@
                     </em> -->
                   </th>         
                   <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('ConsumptionStatus')">
-                    Age
+                    Role
                     <!-- <em class="material-icons {{PasskeysortingOptions.columnName === 'ConsumptionStatus'?'sort-focus-in':''}}" aria-hidden="true">
                       {{PasskeysortingOptions.columnName === 'ConsumptionStatus' && (PasskeysortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
                     </em> -->
@@ -57,15 +57,15 @@
               </thead>
               <tbody>
   
-                <tr *ngFor="let player of userdata" class="gradex">
-                  <td  class="align-middle" style="text-align: left;" >{{player.Name}}</td>
-                  <td  class="align-middle" style="text-align: left;"  > {{player.lastname}}</td>
-                  <td  class="align-middle" style="text-align: left;">{{player.username}}</td>
-                  <td  class="align-middle" style="text-align: left;"  > {{player.email}}</td>
-                  <td  class="align-middle" style="text-align: left;"  > {{player.age}}</td>
+                <tr *ngFor="let user of userdata" class="gradex">
+                  <td  class="align-middle" style="text-align: left;" >{{user.Name}}</td>
+                  <td  class="align-middle" style="text-align: left;"  > {{user.lastname}}</td>
+                  <td  class="align-middle" style="text-align: left;">{{user.username}}</td>
+                  <td  class="align-middle" style="text-align: left;"  > {{user.email}}</td>
+                  <td  class="align-middle" style="text-align: left;"  > {{user.role}}</td>
                  
                   <td  style="text-align: left;">
-                    <button type="button" class="btn btn-primary m-2" (click)='editPlayer(player)'>Edit</button>
+                    <button type="button" class="btn btn-primary m-2" >Edit</button>
                     <button type="button" class="btn btn-primary m-2">Delete</button>
                   </td>
   
@@ -108,5 +108,5 @@
       </div>
     </div>
   </div>
-  <app-updateplayer *ngIf='updateplayer' [createNew]='createNewPlayer'  [playerData]='editplayer' (BackBtn)='BackBtnClicked($event)' [teams]='teams'></app-updateplayer>
+
   

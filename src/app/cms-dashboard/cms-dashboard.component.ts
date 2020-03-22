@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import {CsmUserdataService} from '../csm-userdata.service';
 @Component({
   selector: 'app-cms-dashboard',
   templateUrl: './cms-dashboard.component.html',
@@ -7,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CmsDashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private csmUserdataService: CsmUserdataService) { }
   userData=[];
   showActiveTab:any;
   ngOnInit() {
+    this.csmUserdataService.getUserData().subscribe(data=>{
+      if(data){
+        this.userData=data.user;      
+      }
+    })
   }
 
   SetSortingOptions(){

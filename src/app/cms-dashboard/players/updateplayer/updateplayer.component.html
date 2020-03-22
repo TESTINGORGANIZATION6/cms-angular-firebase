@@ -10,32 +10,32 @@
     </div>
     <div class="card-body">
       <div class="col-lg-12">
-        <div class="form-group row" [ngClass]="{ 'has-error' : (submitted && lastName.invalid) }">
-          <label for="lastName" class="col-sm-3 control-label">Team</label>
+        <!-- <div class="form-group row" [ngClass]="{ 'has-error' : (submitted && team.invalid) }">
+          <label for="team" class="col-sm-3 control-label">Team</label>
           <div class="col-sm-4">
               <select id="userRole" name="userRole" class="form-control" required [(ngModel)]="user.team"
                 #team="ngModel">
                 <option *ngFor="let team of teams" [value]="team.id">{{team.Name}}</option>
               </select>
           </div>
-        </div>
-        <div class="form-group row" [ngClass]="{ 'has-error' : (submitted && firstName.invalid) }">
+        </div> -->
+        <div  class="form-group row" [ngClass]="{ 'has-error' : (submitted && firstName.invalid) }">
           <label for="firstName" class="col-sm-3 control-label">First Name</label>
           <div class="col-sm-4">
-            <label *ngIf="!createNew" for="firstName" class="col-md-9 control-label">
+            <!-- <label  for="firstName" class="col-md-9 control-label">
               {{user.firstName}}
-            </label>
-            <input type="text" *ngIf="createNew" name="firstName" class="form-control" required [(ngModel)]="user.firstName"
+            </label> -->
+            <input type="text" name="firstName" class="form-control" required [(ngModel)]="user.firstName"
             #firstName="ngModel">
           </div>
         </div>
-        <div class="form-group row" [ngClass]="{ 'has-error' : (submitted && lastName.invalid) }">
+        <div  class="form-group row" [ngClass]="{ 'has-error' : (submitted && lastName.invalid) }">
           <label for="lastName" class="col-sm-3 control-label">Last Name</label>
           <div class="col-sm-4">
-            <label *ngIf="!createNew" for="email" class="col-md-9 control-label">
+            <!-- <label  for="email" class="col-md-9 control-label">
               {{user.lastName}}
-            </label>
-            <input type="text"  *ngIf="createNew" name="lastName" class="form-control" required [(ngModel)]="user.lastName"
+            </label> -->
+            <input type="text"  name="lastName" class="form-control" required [(ngModel)]="user.lastName"
             #lastName="ngModel">
           </div>
         </div>
@@ -44,10 +44,10 @@
             Age
           </label>
           <div class="col-sm-4">
-            <label for="age" *ngIf="!createNew" class="col-md-9 control-label">
+            <!-- <label for="age" *ngIf="!createNew" class="col-md-9 control-label">
               {{user.age}}
-            </label>
-            <input type="number" *ngIf="createNew" name="age" class="form-control" required [(ngModel)]="user.age"
+            </label> -->
+            <input type="number"  name="age" class="form-control" required [(ngModel)]="user.age"
             #age="ngModel">
           </div>
           <div class="col-sm-5"></div>
@@ -57,10 +57,10 @@
             position
           </label>
           <div class="col-sm-4">
-            <label  *ngIf="!createNew" for="email" class="col-md-9 control-label">
+            <!-- <label  *ngIf="!createNew" for="email" class="col-md-9 control-label">
               {{user.position}}
-            </label>
-            <input type="text" *ngIf="createNew" name="position" class="form-control" required [(ngModel)]="user.position"
+            </label> -->
+            <input type="text"  name="position" class="form-control" required [(ngModel)]="user.position"
             #position="ngModel">
           </div>
           <div class="col-sm-5"></div>
@@ -70,10 +70,10 @@
             Email
           </label>
           <div class="col-sm-4">
-            <label for="email" *ngIf="!createNew" class="col-md-9 control-label">
+            <!-- <label for="email" *ngIf="!createNew" class="col-md-9 control-label">
               {{user.email}}
-            </label>
-            <input type="email" *ngIf="createNew" name="email" class="form-control" required [(ngModel)]="user.email"
+            </label> -->
+            <input type="email"  name="email" class="form-control" required [(ngModel)]="user.email"
             #email="ngModel">
           </div>
           <div class="col-sm-5"></div>

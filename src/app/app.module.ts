@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule, /* other http imports */ } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS/* other http imports */ } from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,6 +22,10 @@ import { ActivitiesComponent } from './cms-dashboard/activities/activities.compo
 import { PortfolioDashboardComponent } from './portfolio-dashboard/portfolio-dashboard.component';
 import { UserprofilesComponent } from './portfolio-dashboard/userprofiles/userprofiles.component';
 import { ScoutsComponent } from './portfolio-dashboard/scouts/scouts.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+import {LoadingScreenInterceptor} from './helpers/intersepter';
+import { RegisterAdminComponent } from './register-admin/register-admin.component';
+
 
 @NgModule({
   declarations: [
@@ -40,7 +44,8 @@ import { ScoutsComponent } from './portfolio-dashboard/scouts/scouts.component';
     ActivitiesComponent,
     PortfolioDashboardComponent,
     UserprofilesComponent,
-    ScoutsComponent
+    ScoutsComponent,
+    RegisterAdminComponent
   ],
   imports: [
     BrowserModule,
@@ -52,10 +57,16 @@ import { ScoutsComponent } from './portfolio-dashboard/scouts/scouts.component';
     MatSelectModule,
     MatIconModule,
     HttpClientModule,
-    MatTooltipModule
+    MatTooltipModule,
+    NgxSpinnerModule,
+    
 
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: LoadingScreenInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
