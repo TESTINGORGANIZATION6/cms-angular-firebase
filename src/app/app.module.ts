@@ -1,12 +1,12 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS/* other http imports */ } from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule, MatButtonModule, MatSelectModule, MatIconModule } from '@angular/material';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CmsLoginComponent } from './cms-login/cms-login.component';
 import { CmsDashboardComponent } from './cms-dashboard/cms-dashboard.component';
 import { CmsHeaderComponent } from './cms-header/cms-header.component';
