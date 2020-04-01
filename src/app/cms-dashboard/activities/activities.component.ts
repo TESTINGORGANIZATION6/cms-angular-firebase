@@ -9,7 +9,7 @@ import * as UsersEnums from '../../cms-login/cms-login-enum';
 })
 export class ActivitiesComponent implements OnInit {
   ActivitiesData = [];
-  @Input() userData=[];
+  // @Input() userData=[];
   usersEnums = UsersEnums
   constructor(private csmUserdataService: CsmUserdataService) { }
 
