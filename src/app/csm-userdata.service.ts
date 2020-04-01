@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, throwError  } from 'rxjs';
 import { NgxSpinnerService } from "ngx-spinner";
+import { retry, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,21 @@ export class CsmUserdataService {
       Authorization: 'Bearer ' + (!!localStorage.getItem('token') ? localStorage.getItem('token').replace(/"/g, '') : '')
     });
   }
+  handleError(error) {
+   
+    let errorMessage = '';
+    var errorData=[];
+    if (error.error instanceof ErrorEvent) {
+      // client-side error
+      errorMessage = `Error: ${error.error.err}`;
+    } else {
+      // server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    // window.alert(errorMessage);
+   errorData.push({'status':error.status})
+    return errorData;
+  }
 
   AdminPortalGetApi(path: any, params: any) {
     this.spinner.show();
@@ -27,7 +43,9 @@ export class CsmUserdataService {
         'Content-Type': 'application/json'
       }
     };
-    return this.http.get(path, httpOptionsGet);
+    return this.http.get(path, httpOptionsGet).pipe(
+      catchError(this.handleError)
+    );
   }
 
   AdminPortalPostApi(url: any, apiBody: any) {
@@ -37,7 +55,10 @@ export class CsmUserdataService {
         'Content-Type': 'application/json'
       }
     };
-    return this.http.post(url, apiBody, httpOptionsPost);
+    return this.http.post(url, apiBody, httpOptionsPost)
+    .pipe(
+      catchError(this.handleError)
+    );
   }
 
   AdminPortalPutApi(url: any, apiBody: any) {
@@ -47,7 +68,9 @@ export class CsmUserdataService {
         'Content-Type': 'application/json'
       }
     };
-    return this.http.put(url, apiBody, httpOptionsPost);
+    return this.http.put(url, apiBody, httpOptionsPost).pipe(
+      catchError(this.handleError)
+    );
   }
   public getJSON(url): Observable<any> {
     return this.http.get(url);

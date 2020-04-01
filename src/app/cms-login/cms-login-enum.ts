@@ -1,8 +1,11 @@
 export enum UsersWebApis {
-  signup= '/signup',
+  // signup= '/signup',
   login= '/signin',
   Getplayers = '/getplayers',
   getCoaches='/getcoaches',
+  createPlayer='/addplayer',
+  getUser='/user',
+  registerUser='/signup',
   // ActivateDeactivateUser = 'api/user/activatedeactivate',
   // GetPlatformTypes = 'api/user/getplatforms',
   // AddUser = 'api/user/create',

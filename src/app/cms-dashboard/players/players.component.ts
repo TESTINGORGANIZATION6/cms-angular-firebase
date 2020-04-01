@@ -10,8 +10,9 @@ import {environment} from '../../../environments/environment';
   styleUrls: ['./players.component.scss']
 })
 export class PlayersComponent implements OnInit {
- @Input() userData=[];
+// @Input() userData=[];
   playerData:any=[];
+  userId:any;
   usersEnums = UsersEnums;
   updateplayer=false;
   
@@ -24,14 +25,22 @@ export class PlayersComponent implements OnInit {
 
 
   ngOnInit() { 
-    this.getAllplayers();
+  
+    this.csmUserdataService.getUserData().subscribe(data=>{
+      if(data){
+        this.userId=data._id;
+        this.getAllplayers();
+      }
+    })
+      
+ 
   }
 
   SetSortingOptions(sortBy){
 // sort columns logic
   }
   getAllplayers(){
-    const url = environment.apiHost + this.usersEnums.UsersWebApis.Getplayers+'/'+ this.userData['_id'];
+    const url = environment.apiHost + this.usersEnums.UsersWebApis.Getplayers+'/'+ this.userId;
     this.csmUserdataService.AdminPortalGetApi(url, null).subscribe(data => {
       if (data != ""){
          this.playerData = data;

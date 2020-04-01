@@ -65,4 +65,5 @@ export class CmsHeaderComponent implements OnInit {
     localStorage.clear();
     this.router.navigate([''])
   }
+  
 }

@@ -33,20 +33,35 @@ export class CmsLoginComponent implements OnInit {
   checkUser() {
 const url=environment.apiHost + this.usersEnums.UsersWebApis.login;
 var param={
-email:this.model.Username,
+  name:this.model.Username,
 password:this.model.password
 }
 this.csmUserdataService.AdminPortalPostApi(url, param).subscribe(data => {
-  if(data){
-    this.userData=data;
-    localStorage.setItem('token', this.userData.token);
-    this.csmUserdataService.setUserData(this.userData);
-    this.route.navigate(['dashboard']);
+  if(data.status){ 
+    this.wrongDataAlert=true;
+    this.invalidDetails=true;
     // var islogin = this.userData.find(o => (o.UserName === param.username)&&(o.password===param.password));
     // if(islogin){
     //   this.route.navigate(['dashboard']);
     // }
-  }
+  }else{
+    this.userData=data;
+    localStorage.setItem('token', this.userData.token);
+    localStorage.setItem('userId',this.userData.user['_id']);
+    this.getUserInfo(data.user['_id']);
+  } 
 })
+}
+
+getUserInfo(id){
+  var url=environment.apiHost + this.usersEnums.UsersWebApis.getUser+'/'+id;
+  this.csmUserdataService.AdminPortalGetApi(url, null).subscribe(data => {
+    if(data.status){
+    this.route.navigate[''];
+    }else{
+      this.csmUserdataService.setUserData(data);
+      this.route.navigate(['dashboard']);
+    }
+  })
 }
 }

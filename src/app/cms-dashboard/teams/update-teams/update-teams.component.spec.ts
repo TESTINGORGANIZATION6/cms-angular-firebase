@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FormsModule } from '@angular/forms';
 import { UpdateTeamsComponent } from './update-teams.component';
 
 describe('UpdateTeamsComponent', () => {
@@ -8,7 +8,8 @@ describe('UpdateTeamsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UpdateTeamsComponent ]
+      declarations: [ UpdateTeamsComponent ],
+      imports:[FormsModule]
     })
     .compileComponents();
   }));

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FormsModule } from '@angular/forms';
 import { CmsLoginComponent } from './cms-login.component';
+import {RouterTestingModule} from '@angular/router/testing'
 
 describe('CmsLoginComponent', () => {
   let component: CmsLoginComponent;
@@ -8,7 +9,8 @@ describe('CmsLoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CmsLoginComponent ]
+      declarations: [ CmsLoginComponent ],
+      imports:[FormsModule, RouterTestingModule]
     })
     .compileComponents();
   }));

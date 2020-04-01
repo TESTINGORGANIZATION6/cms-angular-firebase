@@ -1,4 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import {CsmUserdataService} from '../../../csm-userdata.service';
+import * as UsersEnums from '../../../cms-login/cms-login-enum';
 
 @Component({
   selector: 'app-updateplayer',
@@ -7,12 +10,13 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class UpdateplayerComponent implements OnInit{
   submitted=false;
-  @Input() teams: any;
+  @Input() userData: any;
   @Input() playerData: any;
   @Input() createNew:any;
   @Output() BackBtn: EventEmitter<any> = new EventEmitter<any>();
+  UsersEnums=UsersEnums;
   user:any = {};
-  constructor() { }
+  constructor( private csmUserdataService:CsmUserdataService) { }
 
   ngOnInit() {
     if(!this.createNew){
@@ -22,7 +26,22 @@ export class UpdateplayerComponent implements OnInit{
   }
 
   SaveUser(form){
-
+    const url= environment.apiHost + this.UsersEnums.UsersWebApis.createPlayer+ '/'+ this.userData['_id'];
+    var params={      
+        "firstname": this.user.firstName,
+        "lastname": this.user.lastName,
+        "age": 'player',
+        "email": this.user.email,
+        "team": this.user.team,
+        "position": this.user.position,
+        "photo": ""
+      
+    }
+    this.csmUserdataService.AdminPortalPostApi(url,params).subscribe(data =>{
+      if(data){
+        
+      }
+    })
   }
   Cancel(){
 this.BackBtn.emit(true);

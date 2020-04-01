@@ -10,12 +10,13 @@ export class CmsDashboardComponent implements OnInit {
   constructor(private csmUserdataService: CsmUserdataService) { }
   userData=[];
   showActiveTab:any;
+  unsubscribeService:any;
   ngOnInit() {
-    this.csmUserdataService.getUserData().subscribe(data=>{
-      if(data){
-        this.userData=data.user;      
-      }
-    })
+  //  this.unsubscribeService= this.csmUserdataService.getUserData().subscribe(data=>{
+  //     if(data){
+  //       this.userData=data;      
+  //     }
+  //   })
   }
 
   SetSortingOptions(){
@@ -25,5 +26,9 @@ export class CmsDashboardComponent implements OnInit {
   checkActiveTab(e){
 this.showActiveTab=e;
   }
+   
+//   ngOnDistroy(){
+// this.unsubscribeService.unsubscribe();
+//   }
 
 }

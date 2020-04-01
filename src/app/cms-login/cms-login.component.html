@@ -6,7 +6,7 @@
         <span class="input-group-addon">
             <i class="material-icons">person</i>
         </span>
-        <input type="text" name="Username"  [(ngModel)]="model.Username"  placeholder="Username" aria-label="Username"  class="form-control"
+        <input type="text" name="Username"  [(ngModel)]="model.Username" (keyup)='wrongDataAlert=false'  placeholder="Username" aria-label="Username"  class="form-control"
         #Username="ngModel" [ngClass]="{ 'is-invalid': loginForm.submitted && Username.invalid }" required />
     </div>
     <div *ngIf="loginForm.submitted && Username.invalid" class="invalid-feedback">
@@ -17,7 +17,7 @@
         <span class="input-group-addon">
             <i class="material-icons">lock</i>
         </span>
-            <input type="{{(passwordToggel)?'text':'password'}}"  placeholder="Password" name="password" class="form-control" [(ngModel)]="model.password" #password="ngModel" [ngClass]="{ 'is-invalid': loginForm.submitted && password.invalid }" required>
+            <input type="{{(passwordToggel)?'text':'password'}}" (keyup)='wrongDataAlert=false'  placeholder="Password" name="password" class="form-control" [(ngModel)]="model.password" #password="ngModel" [ngClass]="{ 'is-invalid': loginForm.submitted && password.invalid }" required>
         <span class="input-group-addon"
             (click)="(this.passwordToggel)?(this.passwordToggel=false):this.passwordToggel=true">
             <a href="JavaScript:void(0);" aria-label="Show or hide password"><i class="material-icons">
@@ -37,7 +37,7 @@
         </label>
     </div>
 
-    <div   class="alert alert-danger alert-dismissible wrongDataAlert" *ngIf='wrongDataAlert' tabindex="-1">
+    <div   class="alert alert-danger alert-dismissible wrongDataAlert" *ngIf='wrongDataAlert && invalidDetails' tabindex="-1">
         <span class="alertIcon">
             <i class="material-icons">priority_high</i>
         </span>

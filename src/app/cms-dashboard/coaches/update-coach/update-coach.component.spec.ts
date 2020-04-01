@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FormsModule } from '@angular/forms';
 import { UpdateCoachComponent } from './update-coach.component';
+import { MustMatchDirective } from '../../../helpers/mustmatchvalidator';
 
 describe('UpdateCoachComponent', () => {
   let component: UpdateCoachComponent;
@@ -8,7 +9,8 @@ describe('UpdateCoachComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UpdateCoachComponent ]
+      declarations: [ UpdateCoachComponent, MustMatchDirective ],
+      imports:[FormsModule]
     })
     .compileComponents();
   }));
