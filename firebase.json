@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/firebase-project",
+    "public": "dist/cms-clientside",
     "ignore": [
       "firebase.json",
       "**/.*",
