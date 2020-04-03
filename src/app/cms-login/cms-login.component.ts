@@ -33,7 +33,7 @@ export class CmsLoginComponent implements OnInit {
   checkUser() {
 const url=environment.apiHost + this.usersEnums.UsersWebApis.login;
 var param={
-  name:this.model.Username,
+username:this.model.Username,
 password:this.model.password
 }
 this.csmUserdataService.AdminPortalPostApi(url, param).subscribe(data => {
