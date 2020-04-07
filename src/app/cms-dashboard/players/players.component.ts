@@ -12,14 +12,13 @@ import {environment} from '../../../environments/environment';
 export class PlayersComponent implements OnInit {
 // @Input() userData=[];
   playerData:any=[];
-  userId:any;
+  userData:any;
   usersEnums = UsersEnums;
-  updateplayer=false;
-  
+  updateplayer=false;  
   createNewPlayer=false;
   editplayer:any;
   teams;
-  ;
+  
   // @Input() appName:any;
   constructor(private csmUserdataService: CsmUserdataService) { }
 
@@ -28,7 +27,7 @@ export class PlayersComponent implements OnInit {
   
     this.csmUserdataService.getUserData().subscribe(data=>{
       if(data){
-        this.userId=data._id;
+        this.userData=data;
         this.getAllplayers();
       }
     })
@@ -40,10 +39,10 @@ export class PlayersComponent implements OnInit {
 // sort columns logic
   }
   getAllplayers(){
-    const url = environment.apiHost + this.usersEnums.UsersWebApis.Getplayers+'/'+ this.userId;
+    const url = environment.apiHost + this.usersEnums.UsersWebApis.Getplayers+'/'+ this.userData._id;
     this.csmUserdataService.AdminPortalGetApi(url, null).subscribe(data => {
       if (data != ""){
-         this.playerData = data;
+         this.playerData = data.result;
         // this.teams=data.userdata.teams;  
       }
     })
