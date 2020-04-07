@@ -114,4 +114,4 @@
     </div>
   </div>
 </div>
-<app-updateplayer *ngIf='updateplayer' [createNew]='createNewPlayer'  [playerData]='editplayer' (BackBtn)='BackBtnClicked($event)'></app-updateplayer>
+<app-updateplayer *ngIf='updateplayer' [createNew]='createNewPlayer' [userData]="userData"  [playerData]='editplayer' (BackBtn)='BackBtnClicked($event)'></app-updateplayer>

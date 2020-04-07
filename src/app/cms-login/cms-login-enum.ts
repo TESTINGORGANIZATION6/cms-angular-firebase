@@ -6,6 +6,7 @@ export enum UsersWebApis {
   createPlayer='/addplayer',
   getUser='/user',
   registerUser='/signup',
+  getTeams='/getteams',
   // ActivateDeactivateUser = 'api/user/activatedeactivate',
   // GetPlatformTypes = 'api/user/getplatforms',
   // AddUser = 'api/user/create',
@@ -16,4 +17,8 @@ export enum UsersWebApis {
   getPlayers='getplayers',
   // getOrganization='api/organization/getorganizationbyhierarchy',
   dummyData='../assets/userdata.json'
+}
+
+export enum userposition{
+  
 }

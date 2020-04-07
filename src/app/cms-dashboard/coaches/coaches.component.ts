@@ -10,7 +10,7 @@ import {environment} from '../../../environments/environment';
 })
 export class CoachesComponent implements OnInit {
   coachData:any=[];
-  @Input() userData=[];
+  userId:string;
   usersEnums=UsersEnums;
   editCoach=false;
   coachdata:any;
@@ -18,7 +18,14 @@ export class CoachesComponent implements OnInit {
   constructor(private csmUserdataService: CsmUserdataService) { }
 
   ngOnInit() {
-    this.getAllcoaches();
+      
+    this.csmUserdataService.getUserData().subscribe(data=>{
+      if(data){
+        this.userId=data._id;
+        this.getAllcoaches();
+      }
+    })
+    
   }
 
   SetSortingOptions(sortBy){
@@ -26,7 +33,7 @@ export class CoachesComponent implements OnInit {
   }
 
   getAllcoaches(){
-    const url = environment.apiHost + this.usersEnums.UsersWebApis.getCoaches+'/'+ this.userData['_id'];
+    const url = environment.apiHost + this.usersEnums.UsersWebApis.getCoaches+'/'+ this.userId;
     this.csmUserdataService.AdminPortalGetApi(url, null).subscribe(data => {
       if(data){
          this.coachData = data;
