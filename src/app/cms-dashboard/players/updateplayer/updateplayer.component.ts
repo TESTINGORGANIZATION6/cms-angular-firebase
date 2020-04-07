@@ -15,10 +15,24 @@ export class UpdateplayerComponent implements OnInit{
   @Input() createNew:any;
   @Output() BackBtn: EventEmitter<any> = new EventEmitter<any>();
   UsersEnums=UsersEnums;
-  user:any = {};
+  user:any = {
+    position:null
+  };
+  teams=[];
+  userPositions=[
+    {id:'gool keepar', name:'Gool Keeper'  },
+    {id:'right back', name:'Right Back'  },
+    {id:'left back', name:'Left Back'  },
+    {id:'center defence', name:'Center Defence'},
+    {id:'rigth winger', name:'Right Winger'  },
+    {id:'left winger', name:'Left Winger'  },
+    {id:'center midfielder', name:'Center Midfielder'},
+    {id:'striker', name:'Striker'  },
+  ]
   constructor( private csmUserdataService:CsmUserdataService) { }
 
   ngOnInit() {
+    this.loadTeams()
     if(!this.createNew){
       this.fillUserForm();
     }
@@ -30,11 +44,13 @@ export class UpdateplayerComponent implements OnInit{
     var params={      
         "firstname": this.user.firstName,
         "lastname": this.user.lastName,
-        "age": 'player',
+        "age": this.user.age,
         "email": this.user.email,
-        "team": this.user.team,
+        "team": (this.user.team)?this.user.team:"",
         "position": this.user.position,
-        "photo": ""
+        "photo": "",
+        role:"player",
+        user:this.userData._id
       
     }
     this.csmUserdataService.AdminPortalPostApi(url,params).subscribe(data =>{
@@ -55,12 +71,12 @@ this.BackBtn.emit(true);
       // team:this.teams.find(o => o.Name === this.playerData.team).id,
       position:this.playerData.position,
     }
-// this.user.firstName=this.playerData.Name;
-// this.user.lastName=this.playerData.lastname;
-// this.user.age=this.playerData.age;
-// this.user.email=this.playerData.email;
-// this.user.team=this.playerData.team;
-// this.user.position=this.playerData.position;
+  }
+  loadTeams(){
+    const url= environment.apiHost + this.UsersEnums.UsersWebApis.getTeams + '/'+ this.userData['_id'];
+    this.csmUserdataService.AdminPortalGetApi(url,null).subscribe(data =>{
+this.teams=data;
+    })
 
   }
 }
