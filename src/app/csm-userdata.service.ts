@@ -16,7 +16,6 @@ export class CsmUserdataService {
   }
   getHeaders() {
     return new HttpHeaders({
-      'Content-Type': 'application/json',
       Authorization: 'Bearer ' + (!!localStorage.getItem('token') ? localStorage.getItem('token').replace(/"/g, '') : '')
     });
   }
@@ -52,7 +51,7 @@ export class CsmUserdataService {
     this.spinner.show();
     const httpOptionsPost = {
       headers: (localStorage.getItem('token')) ? this.getHeaders() : {
-        'Content-Type': 'application/json'
+        Accept: 'application/json'
       }
     };
     return this.http.post(url, apiBody, httpOptionsPost)
