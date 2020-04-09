@@ -46,7 +46,7 @@ export class UpdateplayerComponent implements OnInit{
         "lastname": this.user.lastName,
         "age": this.user.age,
         "email": this.user.email,
-        "team": (this.user.team)?this.user.team:"5e89435059275c5960c5c60f",
+        "team": (this.user.team)?this.user.team:"",
         "position": this.user.position,
         "photo": "",
         "role":"player",
@@ -57,6 +57,11 @@ export class UpdateplayerComponent implements OnInit{
     for (let key in params) {
       formData.set(key, params[key])
     }
+
+    if (!this.user.team) {
+      formData.delete("team")
+    }
+
     this.csmUserdataService.AdminPortalPostApi(url,formData).subscribe(data =>{
       if(data){
         console.log(data) 
