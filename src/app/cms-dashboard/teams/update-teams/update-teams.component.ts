@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-update-teams',
@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdateTeamsComponent implements OnInit {
 
+  @Input() action:string;
+  @Input() teamData:object;
+  @Output() BackBtn: EventEmitter<any> = new EventEmitter<any>();
+  
   constructor() { }
 
   ngOnInit() {
+    
+  }
+  goBack(){
+    this.BackBtn.emit(true);
   }
 
 }
