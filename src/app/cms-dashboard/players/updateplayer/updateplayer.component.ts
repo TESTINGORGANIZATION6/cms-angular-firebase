@@ -58,7 +58,7 @@ export class UpdateplayerComponent implements OnInit{
     formData.set(key, params[key])
   }
     if(this.createNew){
-      var url= environment.apiHost + this.UsersEnums.UsersWebApis.createPlayer+ '/'+ this.userData['_id'];
+      let url= environment.apiHost + this.UsersEnums.UsersWebApis.createPlayer+ '/'+ this.userData['_id'];
       this.csmUserdataService.AdminPortalPostApi(url,formData).subscribe(data =>{
         if(data.status){
          showalert.simpleAlert('error', 'error msg', 'error')
@@ -70,7 +70,7 @@ export class UpdateplayerComponent implements OnInit{
       })
     }
     else{
-      var url= environment.apiHost + this.UsersEnums.UsersWebApis.updatePlayer+'/'+this.playerData._id +'/'+ this.userData['_id'];
+      let url= environment.apiHost + this.UsersEnums.UsersWebApis.updatePlayer+'/'+this.playerData._id +'/'+ this.userData['_id'];
       this.csmUserdataService.AdminPortalPutApi(url,formData).subscribe(data =>{
         if(data.status){
          showalert.simpleAlert('error', 'error msg', 'error')
