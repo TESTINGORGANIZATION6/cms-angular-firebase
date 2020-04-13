@@ -46,7 +46,7 @@ export class UpdateCoachComponent implements OnInit {
     formData.set(key, params[key])
   }
     if(this.isCreate){
-      var url= environment.apiHost+UsersEnums.UsersWebApis.createCoach +"/" +this.userData._id;      
+      let url= environment.apiHost+UsersEnums.UsersWebApis.createCoach +"/" +this.userData._id;      
       this.csmUserdataService.AdminPortalPostApi(url, formData).subscribe((data:any)=>{
         if(data.status){
           showalert.simpleAlert('error', 'Somthing went wrong!', 'error')
@@ -56,7 +56,7 @@ export class UpdateCoachComponent implements OnInit {
         }
       })
     }else{
-      var url= environment.apiHost+UsersEnums.UsersWebApis.updatecoach +'/'+this.coachData._id +"/" +this.userData._id;      
+      let url= environment.apiHost+UsersEnums.UsersWebApis.updatecoach +'/'+this.coachData._id +"/" +this.userData._id;      
       this.csmUserdataService.AdminPortalPutApi(url, formData).subscribe((data:any)=>{
         if(data.status){
           showalert.simpleAlert('error', 'Somthing went wrong!', 'error')
