@@ -2,9 +2,10 @@
   <div class='body-content-wrap'>
     <div class="card">
       <div class="card-header">
-        <div class="titleAndBatch">
-          <h1 class="modal-title">Coaches</h1>
+        <div class="titleAndBatch float-left">
+          <h1 class="modal-title">Coaches</h1>         
          </div>
+         <button type="button" class="btn btn-primary float-right" (click)='createCoach()'>Create Coach</button>
       </div>
       <div class="card-body">
 
@@ -13,35 +14,38 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th style=" cursor:pointer; text-align: left;">
+                <th style=" cursor:pointer; text-align: left;" (click)="SetSortingOptions('firstname')">
                   First Name
                   <!-- <em class="material-icons {{PasskeysortingOptions.columnName === 'Passkey'?'sort-focus-in':''}}" aria-hidden="true">
                     {{PasskeysortingOptions.columnName === 'Passkey' && (PasskeysortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
                   </em> -->
                 </th>
-                <th style="cursor:pointer; text-align: left;" (click)="SetSortingOptions('UserName')">
+                <th style="cursor:pointer; text-align: left;" (click)="SetSortingOptions('lastname')">
                   Last Name
                   <!-- <em class="material-icons {{PasskeysortingOptions.columnName === 'UserName'?'sort-focus-in':''}}" aria-hidden="true">
                     {{PasskeysortingOptions.columnName === 'UserName' && (PasskeysortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
                   </em> -->
                 </th>
-                <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('RedemptionDate')">
+                <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('age')">
                 Age
                   <!-- <em class="material-icons {{PasskeysortingOptions.columnName === 'RedemptionDate'?'sort-focus-in':''}}" aria-hidden="true">
                     {{PasskeysortingOptions.columnName === 'RedemptionDate' && (PasskeysortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
-                  </em> -->
-                  <em class="material-icons " aria-hidden="true">
-
-                  </em>
+                  </em> -->               
                 </th>
-                <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('ConsumptionStatus')">
+                <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('email')">
                   Email
                   <!-- <em class="material-icons {{PasskeysortingOptions.columnName === 'ConsumptionStatus'?'sort-focus-in':''}}" aria-hidden="true">
                     {{PasskeysortingOptions.columnName === 'ConsumptionStatus' && (PasskeysortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
                   </em> -->
                 </th>
-                <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('ConsumptionStatus')">
+                <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('team')">
                   Team
+                  <!-- <em class="material-icons {{PasskeysortingOptions.columnName === 'ConsumptionStatus'?'sort-focus-in':''}}" aria-hidden="true">
+                    {{PasskeysortingOptions.columnName === 'ConsumptionStatus' && (PasskeysortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
+                  </em> -->
+                </th>    
+                 <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('createdAt')">
+                  Created Date
                   <!-- <em class="material-icons {{PasskeysortingOptions.columnName === 'ConsumptionStatus'?'sort-focus-in':''}}" aria-hidden="true">
                     {{PasskeysortingOptions.columnName === 'ConsumptionStatus' && (PasskeysortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
                   </em> -->
@@ -61,10 +65,11 @@
                 <td data-title="lastname" class="align-middle" style="text-align: left;"  > {{coach.lastname}}</td>
                 <td data-title="age" class="align-middle" style="text-align: left;">{{coach.age}}</td>
                 <td data-title="email" class="align-middle" style="text-align: left;"  > {{coach.email}}</td>
-                <td data-title="team" class="align-middle" style="text-align: left;">{{coach.team}}</td>
+                <td data-title="team" class="align-middle" style="text-align: left;">{{(coach.team?coach.team:"-NA-")}}</td>
+                <td data-title="team" class="align-middle" style="text-align: left;">{{coach.createdAt | date:'medium'}}</td>
                 <td  style="text-align: left;">
                   <button type="button" class="btn btn-primary m-2" (click)="updateInfo(coach)" >Edit</button>
-                  <button type="button" class="btn btn-primary m-2">Delete</button>
+                  <button type="button" class="btn btn-primary m-2" (click)='updateStatus(coach)'>{{(coach.isActive)?"Disable":"Enable"}}</button>
                 </td>
                 <!-- <td data-title="PublishedDate" style="text-align: left;">
                   <span *ngIf='key.IsRedeemed'><i class="material-icons m-1 icons">done</i>Used</span>
@@ -109,4 +114,4 @@
     </div>
   </div>
 </div>
-<app-update-coach *ngIf="editCoach" [coachData]="coachdata" [teams]="teams" (BackBtn)='BacktoCoachlist($event)'></app-update-coach>
+<app-update-coach *ngIf="editCoach" [coachData]="coachdata" [isCreate]='createNew' [userData]="userdata"  (BackBtn)='BacktoCoachlist($event)'></app-update-coach>

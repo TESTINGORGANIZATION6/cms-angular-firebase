@@ -11,6 +11,8 @@ export class TeamsComponent implements OnInit {
   @Input() userData=[];
   usersEnums = UsersEnums
   isteamedit=false;
+  isNewTeam=true;
+  performAction='create';
   constructor(private csmUserdataService: CsmUserdataService) { }
 
   ngOnInit() {
@@ -28,8 +30,17 @@ export class TeamsComponent implements OnInit {
       }
     })
   }
-
+  CreateTeam(){
+    this.isteamedit=true;
+    this.isNewTeam=true;
+    this.performAction='create';
+  }
   editTeam(){
 this.isteamedit=true;
+this.isNewTeam=false;
+this.performAction='edit';
+  }
+  backToteams(e){
+    this.isteamedit=false;
   }
 }
