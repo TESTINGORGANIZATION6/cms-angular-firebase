@@ -14,50 +14,51 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th style=" cursor:pointer; text-align: left;">
+                <th style=" cursor:pointer; text-align: left;" (click)="SetSortingOptions('firstname')">
                   First Name
-                  <!-- <em class="material-icons {{PasskeysortingOptions.columnName === 'Passkey'?'sort-focus-in':''}}" aria-hidden="true">
-                    {{PasskeysortingOptions.columnName === 'Passkey' && (PasskeysortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
+                  <!-- <em class="material-icons {{SortingOptions.columnName === 'firstname'?'sort-focus-in':''}}" aria-hidden="true">
+                    {{SortingOptions.columnName === 'firstname' && (SortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
                   </em> -->
                 </th>
-                <th style="cursor:pointer; text-align: left;" (click)="SetSortingOptions('UserName')">
+                <th style="cursor:pointer; text-align: left;" (click)="SetSortingOptions('lastname')">
                   Last Name
-                  <!-- <em class="material-icons {{PasskeysortingOptions.columnName === 'UserName'?'sort-focus-in':''}}" aria-hidden="true">
-                    {{PasskeysortingOptions.columnName === 'UserName' && (PasskeysortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
+                  <!-- <em class="material-icons {{SortingOptions.columnName === 'lastname'?'sort-focus-in':''}}" aria-hidden="true">
+                    {{SortingOptions.columnName === 'lastname' && (SortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
                   </em> -->
                 </th>
-                <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('RedemptionDate')">
+                <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('age')">
                 Age
-                  <!-- <em class="material-icons {{PasskeysortingOptions.columnName === 'RedemptionDate'?'sort-focus-in':''}}" aria-hidden="true">
-                    {{PasskeysortingOptions.columnName === 'RedemptionDate' && (PasskeysortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
+                  <!-- <em class="material-icons {{SortingOptions.columnName === 'age'?'sort-focus-in':''}}" aria-hidden="true">
+                    {{SortingOptions.columnName === 'age' && (SortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
                   </em> -->
-                  <!-- <em class="material-icons " aria-hidden="true">
-
-                  </em> -->
+              
                 </th>
-                <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('ConsumptionStatus')">
+                <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('email')">
                   Email
-                  <!-- <em class="material-icons {{PasskeysortingOptions.columnName === 'ConsumptionStatus'?'sort-focus-in':''}}" aria-hidden="true">
-                    {{PasskeysortingOptions.columnName === 'ConsumptionStatus' && (PasskeysortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
+                  <!-- <em class="material-icons {{SortingOptions.columnName === 'email'?'sort-focus-in':''}}" aria-hidden="true">
+                    {{SortingOptions.columnName === 'email' && (SortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
                   </em> -->
                 </th>
-                <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('ConsumptionStatus')">
+                <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('position')">
                   Position
-                  <!-- <em class="material-icons {{PasskeysortingOptions.columnName === 'ConsumptionStatus'?'sort-focus-in':''}}" aria-hidden="true">
-                    {{PasskeysortingOptions.columnName === 'ConsumptionStatus' && (PasskeysortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
+                  <!-- <em class="material-icons {{SortingOptions.columnName === 'position'?'sort-focus-in':''}}" aria-hidden="true">
+                    {{SortingOptions.columnName === 'position' && (SortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
                   </em> -->
                 </th>
-                <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('ConsumptionStatus')">
+                <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('team')">
                   Team
-                  <!-- <em class="material-icons {{PasskeysortingOptions.columnName === 'ConsumptionStatus'?'sort-focus-in':''}}" aria-hidden="true">
-                    {{PasskeysortingOptions.columnName === 'ConsumptionStatus' && (PasskeysortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
+                  <!-- <em class="material-icons {{SortingOptions.columnName === 'team'?'sort-focus-in':''}}" aria-hidden="true">
+                    {{SortingOptions.columnName === 'team' && (SortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
                   </em> -->
                 </th>
-                <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('ConsumptionStatus')">
-                  Actions
-                  <!-- <em class="material-icons {{PasskeysortingOptions.columnName === 'ConsumptionStatus'?'sort-focus-in':''}}" aria-hidden="true">
-                    {{PasskeysortingOptions.columnName === 'ConsumptionStatus' && (PasskeysortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
+                <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('createdAt')">
+                  Created At  
+                  <!-- <em class="material-icons {{SortingOptions.columnName === 'createdAt'?'sort-focus-in':''}}" aria-hidden="true">
+                    {{SortingOptions.columnName === 'createdAt' && (SortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
                   </em> -->
+                </th>
+                <th style="cursor:pointer; text-align:left;" >
+                  Actions
                 </th>
               </tr>
             </thead>
@@ -69,7 +70,8 @@
                 <td  class="align-middle" style="text-align: left;">{{player.age}}</td>
                 <td  class="align-middle" style="text-align: left;"  > {{player.email}}</td>
                 <td  class="align-middle" style="text-align: left;"  > {{player.position}}</td>
-                <td  class="align-middle" style="text-align: left;">{{player.team}}</td>
+                <td  class="align-middle" style="text-align: left;">{{(player.team)?player.team:"-NA-"}}</td>
+                <td  class="align-middle" style="text-align: left;">{{player.createdAt | date:'medium'}}</td>
                 <td  style="text-align: left;">
                   <button type="button" class="btn btn-primary m-2" (click)='editPlayer(player)'>Edit</button>
                   <button type="button" class="btn btn-primary m-2">Delete</button>

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import {CsmUserdataService} from '../../../csm-userdata.service';
 import * as UsersEnums from '../../../cms-login/cms-login-enum';
+import * as showalert from '../../../helpers/sweetalert';
 
 @Component({
   selector: 'app-updateplayer',
@@ -39,8 +40,7 @@ export class UpdateplayerComponent implements OnInit{
 
   }
 
-  SaveUser(form){
-    const url= environment.apiHost + this.UsersEnums.UsersWebApis.createPlayer+ '/'+ this.userData['_id'];
+  SaveUser(form){   
     var params={      
         "firstname": this.user.firstName,
         "lastname": this.user.lastName,
@@ -53,21 +53,36 @@ export class UpdateplayerComponent implements OnInit{
         "user":this.userData._id
       
     }
-    let formData = new FormData()
-    for (let key in params) {
-      formData.set(key, params[key])
-    }
-
-    if (!this.user.team) {
-      formData.delete("team")
-    }
-
-    this.csmUserdataService.AdminPortalPostApi(url,formData).subscribe(data =>{
-      if(data){
-        console.log(data) 
-      }
-    })
+  let formData = new FormData()
+  for (let key in params) {
+    formData.set(key, params[key])
   }
+    if(this.createNew){
+      let url= environment.apiHost + this.UsersEnums.UsersWebApis.createPlayer+ '/'+ this.userData['_id'];
+      this.csmUserdataService.AdminPortalPostApi(url,formData).subscribe(data =>{
+        if(data.status){
+         showalert.simpleAlert('error', 'error msg', 'error')
+        
+        }else{
+          showalert.simpleAlert('success', 'Player Created Successfully', 'success')
+          this.Cancel();
+        }
+      })
+    }
+    else{
+      let url= environment.apiHost + this.UsersEnums.UsersWebApis.updatePlayer+'/'+this.playerData._id +'/'+ this.userData['_id'];
+      this.csmUserdataService.AdminPortalPutApi(url,formData).subscribe(data =>{
+        if(data.status){
+         showalert.simpleAlert('error', 'error msg', 'error')
+         
+        }else{
+          showalert.simpleAlert('success', 'Player Updated Successfully', 'success')
+          this.Cancel();
+        }
+      })
+    }
+  }
+
   Cancel(){
 this.BackBtn.emit(true);
   }

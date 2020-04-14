@@ -1,88 +1,71 @@
 <div class="card form-page-wrap">
   <form #userForm="ngForm" (ngSubmit)="SaveUser(userForm)" [mustMatch]="['password', 'confirmPassword']">
     <div class="card-header">
-      <h1 class="float-left card-header-title">Update Coach</h1>
+      <h1 class="float-left card-header-title"> {{isCreate ?"Create Player":'Update Player'}}</h1>
       <div class="float-right">
-        <button class="btn btn-primary m-2" type="submit"
-          id="n-user-add-save">Save</button>
+        <button class="btn btn-primary m-2" type="submit" id="n-user-add-save">Save</button>
         <button class="btn btn-secondary m-2" (click)="Cancel()" id="n-user-add-cancel">Cancel</button>
       </div>
       <div class="clearfix"></div>
     </div>
     <div class="card-body">
       <div class="col-lg-12">
-        <div class="form-group row" [ngClass]="{ 'has-error' : (submitted && team.invalid) }">
+        <div class="form-group row" *ngIf='teams.length >0' [ngClass]="{ 'has-error' : (submitted && team.invalid) }">
           <label for="team" class="col-sm-3 control-label">Team</label>
           <div class="col-sm-4">
-            <div class="col-sm-4">
-              <select id="team" name="team" class="form-control" required [(ngModel)]="user.team"
-                #team="ngModel" >
-                <option *ngFor="let team of teams" [value]="team.id">{{team.Name}}</option>
-              </select>
-            </div>
+            <select id="userRole" name="userRole" class="form-control" required [(ngModel)]="user.team" #team="ngModel">
+              <option *ngFor="let team of teams" [value]="team.id">{{team.Name}}</option>
+            </select>
           </div>
         </div>
-
-        <div class="form-group row">
+        <div class="form-group row" [ngClass]="{ 'has-error' : (submitted && firstName.invalid) }">
           <label for="firstName" class="col-sm-3 control-label">First Name</label>
           <div class="col-sm-4">
-
-              <label for="email" class="col-md-9 control-label">
-                {{user.firstName}}
-              </label>
+            <!-- <label  for="firstName" class="col-md-9 control-label">
+              {{user.firstName}}
+            </label> -->
+            <input type="text" name="firstName" class="form-control" required [(ngModel)]="user.firstName"
+              #firstName="ngModel">
           </div>
-
         </div>
-        <div class="form-group row" >
+        <div class="form-group row" [ngClass]="{ 'has-error' : (submitted && lastName.invalid) }">
           <label for="lastName" class="col-sm-3 control-label">Last Name</label>
           <div class="col-sm-4">
-            <label for="email" class="col-md-9 control-label">
+            <!-- <label  for="email" class="col-md-9 control-label">
               {{user.lastName}}
-            </label>
+            </label> -->
+            <input type="text" name="lastName" class="form-control" required [(ngModel)]="user.lastName"
+              #lastName="ngModel">
           </div>
         </div>
-
         <div class="form-group row">
           <label for="age" class="col-sm-3 control-label">
             Age
           </label>
           <div class="col-sm-4">
-            <label for="age" class="col-md-9 control-label">
+            <!-- <label for="age" *ngIf="!createNew" class="col-md-9 control-label">
               {{user.age}}
-            </label>
+            </label> -->
+            <input type="number" name="age" class="form-control" required [(ngModel)]="user.age" #age="ngModel">
           </div>
           <div class="col-sm-5"></div>
         </div>
-        <!-- <div class="form-group row">
-          <label for="email" class="col-sm-3 control-label">
-            position
-          </label>
-          <div class="col-sm-4">
-            <label for="email" class="col-md-9 control-label">
-              {{user.position}}
-            </label>
-          </div>
-          <div class="col-sm-5"></div>
-        </div> -->
-
         <div class="form-group row">
           <label for="email" class="col-sm-3 control-label">
             Email
           </label>
           <div class="col-sm-4">
-            <label for="email" class="col-md-9 control-label">
+            <!-- <label for="email" *ngIf="!createNew" class="col-md-9 control-label">
               {{user.email}}
-            </label>
+            </label> -->
+            <input type="email" name="email" class="form-control" required [(ngModel)]="user.email" #email="ngModel">
           </div>
           <div class="col-sm-5"></div>
         </div>
-
-
-
         <div class="form-group row"
           [ngClass]="{ 'has-error' : (password.errors?.minlength) || (password.errors?.maxlength) }">
           <label for="password" class="col-sm-3 control-label">
-            Reset Password
+            {{isCreate ?"Password":'Reset Password'}}
           </label>
           <div class="col-sm-4">
             <input type="password" name="password" class="form-control" [(ngModel)]="user.password" #password="ngModel"
