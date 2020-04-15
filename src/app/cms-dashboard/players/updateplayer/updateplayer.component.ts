@@ -57,6 +57,9 @@ export class UpdateplayerComponent implements OnInit{
   for (let key in params) {
     formData.set(key, params[key])
   }
+  if(!this.user.team){
+    formData.delete("team")
+  }
     if(this.createNew){
       let url= environment.apiHost + this.UsersEnums.UsersWebApis.createPlayer+ '/'+ this.userData['_id'];
       this.csmUserdataService.AdminPortalPostApi(url,formData).subscribe(data =>{
