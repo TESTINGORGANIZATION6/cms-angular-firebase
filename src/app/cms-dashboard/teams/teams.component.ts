@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CsmUserdataService } from '../../csm-userdata.service';
 import * as UsersEnums from '../../cms-login/cms-login-enum';
 @Component({
