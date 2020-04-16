@@ -1,4 +1,4 @@
-<div class="body-section" *ngIf="!isteamedit">
+<div class="body-section" *ngIf="!hideTeams">
   <div class='body-content-wrap'>
     <div class="card">
       <div class="card-header">
@@ -110,4 +110,5 @@
     </div>
   </div>
 </div>
-<app-update-teams *ngIf='isteamedit' [action]='' (BackBtn)="backToteams($event)"> </app-update-teams>
+<app-update-teams *ngIf='isteamedit'  (BackBtn)="backToteams($event)"> </app-update-teams>
+<app-create-team *ngIf="isNewTeam" [userData]='userData' (BackBtn)="backToteams($event)"></app-create-team>

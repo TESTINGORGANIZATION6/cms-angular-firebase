@@ -8,14 +8,20 @@ import * as UsersEnums from '../../cms-login/cms-login-enum';
 })
 export class TeamsComponent implements OnInit {
   teamData = [];
-  @Input() userData=[];
+  userData:any;
   usersEnums = UsersEnums
   isteamedit=false;
-  isNewTeam=true;
-  performAction='create';
+  isNewTeam=false;
+  hideTeams=false;
+
   constructor(private csmUserdataService: CsmUserdataService) { }
 
   ngOnInit() {
+    this.csmUserdataService.getUserData().subscribe(data=>{
+      if(data){
+        this.userData=data;
+      }
+    })
     this.getAllteams();
   }
 
@@ -31,16 +37,16 @@ export class TeamsComponent implements OnInit {
     })
   }
   CreateTeam(){
-    this.isteamedit=true;
     this.isNewTeam=true;
-    this.performAction='create';
+    this.hideTeams=true;
   }
   editTeam(){
 this.isteamedit=true;
-this.isNewTeam=false;
-this.performAction='edit';
+this.hideTeams=true;
   }
   backToteams(e){
     this.isteamedit=false;
+    this.isNewTeam=false;
+    this.hideTeams=false;
   }
 }

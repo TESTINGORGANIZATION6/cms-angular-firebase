@@ -40,8 +40,12 @@ export class UpdateplayerComponent implements OnInit{
 
   }
 
-  SaveUser(form){   
-    var params={      
+  SaveUser(form){
+this.submitted=true;
+if(form.invalid){
+  return false;
+}
+    var params={
         "firstname": this.user.firstName,
         "lastname": this.user.lastName,
         "age": this.user.age,
@@ -51,7 +55,7 @@ export class UpdateplayerComponent implements OnInit{
         "photo": "",
         "role":"player",
         "user":this.userData._id
-      
+
     }
   let formData = new FormData()
   for (let key in params) {
@@ -65,7 +69,7 @@ export class UpdateplayerComponent implements OnInit{
       this.csmUserdataService.AdminPortalPostApi(url,formData).subscribe(data =>{
         if(data.status){
          showalert.simpleAlert('error', 'error msg', 'error')
-        
+
         }else{
           showalert.simpleAlert('success', 'Player Created Successfully', 'success')
           this.Cancel();
@@ -77,7 +81,7 @@ export class UpdateplayerComponent implements OnInit{
       this.csmUserdataService.AdminPortalPutApi(url,formData).subscribe(data =>{
         if(data.status){
          showalert.simpleAlert('error', 'error msg', 'error')
-         
+
         }else{
           showalert.simpleAlert('success', 'Player Updated Successfully', 'success')
           this.Cancel();
