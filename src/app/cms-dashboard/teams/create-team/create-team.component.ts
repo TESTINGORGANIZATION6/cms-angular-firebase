@@ -53,8 +53,20 @@ export class CreateTeamComponent implements OnInit {
     var params = {
       name: this.team.teamName,
       ageGroup: this.team.age,
+      description:this.team.description,
       staff: this.allStafList,
+      user: this.userData._id
     };
+//     var params={
+//       "name":"Mumbai",
+// "description":"Team of Heroes",
+// "ageGroup": "15-25",
+// "user": "5e8fdf97ec53df5de4b37d06",
+// "staff": {
+// "name": "Swapnil Rabse",
+// "designation": "Manager",
+// "contact": "saagu41@codeburst.io"
+// }}
     this.csmUserdataService.AdminPortalPostApi(url, params).subscribe((data:any)=>{
       if(data.status){
 
