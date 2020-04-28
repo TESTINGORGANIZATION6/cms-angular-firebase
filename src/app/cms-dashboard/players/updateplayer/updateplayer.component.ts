@@ -17,9 +17,11 @@ export class UpdateplayerComponent implements OnInit{
   @Output() BackBtn: EventEmitter<any> = new EventEmitter<any>();
   UsersEnums=UsersEnums;
   user:any = {
-    position:null
+    position:null,
+    team:null
   };
   teams=[];
+  addteam=false;
   userPositions=[
     {id:'gool keepar', name:'Gool Keeper'  },
     {id:'right back', name:'Right Back'  },
@@ -33,11 +35,7 @@ export class UpdateplayerComponent implements OnInit{
   constructor( private csmUserdataService:CsmUserdataService) { }
 
   ngOnInit() {
-    this.loadTeams()
-    if(!this.createNew){
-      this.fillUserForm();
-    }
-
+    this.loadTeams();
   }
 
   SaveUser(form){
@@ -50,7 +48,7 @@ if(form.invalid){
         "lastname": this.user.lastName,
         "age": this.user.age,
         "email": this.user.email,
-        "team": (this.user.team)?this.user.team:"",
+        "team": (this.addteam)?this.user.team:"",
         "position": this.user.position,
         "photo": "",
         "role":"player",
@@ -61,7 +59,7 @@ if(form.invalid){
   for (let key in params) {
     formData.set(key, params[key])
   }
-  if(!this.user.team){
+  if(!this.user.team || !this.addteam){
     formData.delete("team")
   }
     if(this.createNew){
@@ -99,14 +97,21 @@ this.BackBtn.emit(true);
       lastName:this.playerData.lastname,
       age:this.playerData.age,
       email:this.playerData.email,
-      // team:this.teams.find(o => o.Name === this.playerData.team).id,
+       team:null,
       position:this.playerData.position,
     }
+    if(this.playerData.team){
+    this.user.team=this.playerData.team._id;
+    this.addteam=true;
+      }
   }
   loadTeams(){
-    const url= environment.apiHost + this.UsersEnums.UsersWebApis.getTeams + '/'+ this.userData['_id'];
+    const url= environment.apiHost + this.UsersEnums.UsersWebApis.allTeams + '/'+ this.userData['_id'];
     this.csmUserdataService.AdminPortalGetApi(url,null).subscribe(data =>{
-this.teams=data;
+      this.teams=data;
+      if(!this.createNew){
+        this.fillUserForm();
+      }
     })
 
   }

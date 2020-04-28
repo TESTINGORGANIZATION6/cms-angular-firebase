@@ -2,22 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as UsersEnums from '../../../cms-login/cms-login-enum';
 import { CsmUserdataService } from '../../../csm-userdata.service';
 import { environment } from '../../../../environments/environment';
-import {SelectionModel} from '@angular/cdk/collections';
-import {MatTableDataSource} from '@angular/material/table';
+import * as showalert from '../../../helpers/sweetalert';
 
-
-const ELEMENT_DATA = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
 @Component({
   selector: 'app-create-team',
   templateUrl: './create-team.component.html',
@@ -25,8 +11,12 @@ const ELEMENT_DATA = [
 })
 export class CreateTeamComponent implements OnInit {
   submitted = false;
-  team: any = {};
+  team: any = {
+    coach:null,
+  };
   @Input() userData: any;
+  @Input() isEditTeam:any;
+  @Input() teamData:any;
   @Output() BackBtn: EventEmitter<any> = new EventEmitter<any>();
   addStaff = false;
   staff: any = {
@@ -35,13 +25,14 @@ export class CreateTeamComponent implements OnInit {
   currentEdit: any;
   playerData:any=[]
   allStafList: any = [];
+  coachList:any=[];
   addplayer=false;
-  displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
-  selection = new SelectionModel(true, []);
+addedPlayers=[];
+
   constructor(private csmUserdataService: CsmUserdataService) { }
 
   ngOnInit() {
+    this.loadCoaches()
   }
 
   createTeam(form) {
@@ -55,7 +46,8 @@ export class CreateTeamComponent implements OnInit {
       ageGroup: this.team.age,
       description:this.team.description,
       staff: this.allStafList,
-      user: this.userData._id
+      user: this.userData._id,
+      players:this.addedPlayers,
     };
 //     var params={
 //       "name":"Mumbai",
@@ -71,7 +63,8 @@ export class CreateTeamComponent implements OnInit {
       if(data.status){
 
       }else{
-
+        showalert.simpleAlert('success', 'Team Created Successfully', 'success');
+        this.Cancel();
       }
     })
 
@@ -121,37 +114,65 @@ export class CreateTeamComponent implements OnInit {
       if(this.team.age){
         this.addStaff=false;
         this.addplayer=true;
-        const url = environment.apiHost + UsersEnums.UsersWebApis.availablePlayers+"/"+ this.userData._id+"?orderBy=createdAt&sortBy=desc&limit=3&maxAge="+this.team.age+"&minAge=0";
-        this.csmUserdataService.AdminPortalGetApi(url, null).subscribe(data => {
-          if (data != ""){
-             this.playerData = data.result;
-            // this.teams=data.userdata.teams;
-          }
-        })
+        // const url = environment.apiHost + UsersEnums.UsersWebApis.availablePlayers+"/"+ this.userData._id+"?orderBy=desc&sortBy=createdAt&limit=3&maxAge="+this.team.age+"&minAge=0";
+        // this.csmUserdataService.AdminPortalGetApi(url, null).subscribe(data => {
+        //   if (data != ""){
+        //      this.playerData = data.result;
+        //   }
+        // })
       }else{
         alert('please add age group');
       }
     }
   }
-
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-    /** Selects all rows if they are not all selected; otherwise clear selection. */
-    masterToggle() {
-      this.isAllSelected() ?
-          this.selection.clear() :
-          this.dataSource.data.forEach(row => this.selection.select(row));
+  loadPlayers(){
+    if(this.team.age && this.team.age != ""){
+      this.addplayer=false;
+      this.addedPlayers=[];
+      const url = environment.apiHost + UsersEnums.UsersWebApis.availablePlayers+"/"+ this.userData._id+"?orderBy=desc&sortBy=createdAt&limit=3&maxAge="+this.team.age+"&minAge=0";
+      this.csmUserdataService.AdminPortalGetApi(url, null).subscribe(data => {
+        if (data != ""){
+           this.playerData = data.result;
+          // this.teams=data.userdata.teams;
+        }
+      })
     }
 
-    /** The label for the checkbox on the passed row */
-    checkboxLabel(row?): string {
-      if (!row) {
-        return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+  }
+
+
+    AddorRemove(player, e){
+      let BtnRef= e.currentTarget;
+      if(BtnRef.innerHTML == 'Add'){
+        this.addedPlayers.push(player);
+        player['isadded']=true;
+
+      }else{
+        this.addedPlayers= this.addedPlayers.filter((item) => item._id !== player._id);
+        player['isadded']=false;
       }
-      return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    }
+
+    loadCoaches(){
+      const url = environment.apiHost + UsersEnums.UsersWebApis.allCoaches + '/' + this.userData._id;
+      this.csmUserdataService.AdminPortalGetApi(url, null).subscribe(data => {
+        if (data) {
+          this.coachList = data;
+          if(this.isEditTeam){
+            this.fillFormData();
+          }
+          // this.teams=data.userdata.teams;
+        }
+      })
+    }
+    fillFormData(){
+this.team={
+  name:this.teamData.name,
+  description:this.teamData.description,
+  age:this.teamData.ageGroup,
+  coach:(this.teamData.coach)?this.teamData.coach:null
+}
+this.allStafList=this.teamData.staff;
     }
 
     Cancel(){

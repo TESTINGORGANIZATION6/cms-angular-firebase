@@ -14,7 +14,11 @@ export enum UsersWebApis {
   getPlayers='getplayers',
   createTeam='/addteam',
   dummyData='../assets/userdata.json',
-  availablePlayers='/availableplayers'
+  availablePlayers='/availableplayers',
+  allTeams='/getallteams',
+  allCoaches='/getallcoaches',
+  updatePlayerStatus='/updateplayerstatus',
+  updateTeamStatus='/updateteamstatus'
 }
 
 export enum userposition{

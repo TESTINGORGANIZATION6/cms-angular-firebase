@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import {CsmUserdataService} from '../../../csm-userdata.service';
+import { CsmUserdataService } from '../../../csm-userdata.service';
 import * as UsersEnums from '../../../cms-login/cms-login-enum';
-import {environment} from '../../../../environments/environment';
-import { CommonPaginationService} from '../../../helpers/pagination.service';
+import { environment } from '../../../../environments/environment';
+import { CommonPaginationService } from '../../../helpers/pagination.service';
 import * as showalert from '../../../helpers/sweetalert';
 
 @Component({
@@ -11,56 +11,61 @@ import * as showalert from '../../../helpers/sweetalert';
   styleUrls: ['./update-coach.component.scss']
 })
 export class UpdateCoachComponent implements OnInit {
-  user: any = {};
+  user: any = {
+    team:null
+  };
   // @Input() teams: any;
   @Input() coachData: any;
   @Input() userData: any;
-  @Input() isCreate:any
+  @Input() isCreate: any
   @Output() BackBtn: EventEmitter<any> = new EventEmitter<any>();
-  submitted=false;
-  teams=[];
-  constructor(private csmUserdataService:CsmUserdataService, private commonPaginationService:CommonPaginationService) { }
+  submitted = false;
+  teams = [];
+  addteam = false;
+  constructor(private csmUserdataService: CsmUserdataService, private commonPaginationService: CommonPaginationService) { }
 
   ngOnInit() {
-    if(!this.isCreate){
-      this.fillUserForm();
-    }
-  
+  this.loadTeams();
+
   }
   SaveUser(form) {
-    if(form.invalid){
-       return false;
+    this.submitted = true;
+    if (form.invalid) {
+      return false;
     }
-    var params={      
+    var params = {
       "firstname": this.user.firstName,
       "lastname": this.user.lastName,
       "age": this.user.age,
       "email": this.user.email,
-      "team": (this.user.team)?this.user.team:"5e89435059275c5960c5c60f",     
+      "team": (this.addteam) ? this.user.team : "",
       "photo": "",
-      "role":"coach",
-      "user":this.userData._id      
-  }
-  let formData = new FormData()
-  for (let key in params) {
-    formData.set(key, params[key])
-  }
-    if(this.isCreate){
-      let url= environment.apiHost+UsersEnums.UsersWebApis.createCoach +"/" +this.userData._id;      
-      this.csmUserdataService.AdminPortalPostApi(url, formData).subscribe((data:any)=>{
-        if(data.status){
+      "role": "coach",
+      "user": this.userData._id
+    }
+    let formData = new FormData()
+    for (let key in params) {
+      formData.set(key, params[key])
+    }
+    if(!this.user.team || !this.addteam){
+      formData.delete("team")
+    }
+    if (this.isCreate) {
+      let url = environment.apiHost + UsersEnums.UsersWebApis.createCoach + "/" + this.userData._id;
+      this.csmUserdataService.AdminPortalPostApi(url, formData).subscribe((data: any) => {
+        if (data.status) {
           showalert.simpleAlert('error', 'Somthing went wrong!', 'error')
-        }else{
+        } else {
           showalert.simpleAlert('success', 'Coach Created Successfully', 'success')
           this.Cancel();
         }
       })
-    }else{
-      let url= environment.apiHost+UsersEnums.UsersWebApis.updatecoach +'/'+this.coachData._id +"/" +this.userData._id;      
-      this.csmUserdataService.AdminPortalPutApi(url, formData).subscribe((data:any)=>{
-        if(data.status){
+    } else {
+      let url = environment.apiHost + UsersEnums.UsersWebApis.updatecoach + '/' + this.coachData._id + "/" + this.userData._id;
+      this.csmUserdataService.AdminPortalPutApi(url, formData).subscribe((data: any) => {
+        if (data.status) {
           showalert.simpleAlert('error', 'Somthing went wrong!', 'error')
-        }else{
+        } else {
           showalert.simpleAlert('success', 'Coach Updated Successfully', 'success')
           this.Cancel();
         }
@@ -80,8 +85,21 @@ export class UpdateCoachComponent implements OnInit {
       lastName: this.coachData.lastname,
       age: this.coachData.age,
       email: this.coachData.email,
-      // team: this.teams.find(o => o.Name === this.coachData.team).id
-      // position: this.coachData.position,
+       team: null
     }
+    if(this.coachData.team){
+      this.user.team=this.coachData.team._id;
+      this.addteam=true;
+        }
+  }
+  loadTeams(){
+    const url= environment.apiHost + UsersEnums.UsersWebApis.allTeams + '/'+ this.userData['_id'];
+    this.csmUserdataService.AdminPortalGetApi(url,null).subscribe(data =>{
+      this.teams=data;
+      if (!this.isCreate) {
+        this.fillUserForm();
+      }
+    })
+
   }
 }
