@@ -8,13 +8,13 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class UpdateTeamsComponent implements OnInit {
 
   @Input() action:string;
-  @Input() teamData:object;
+  @Input() teamData:any;
   @Output() BackBtn: EventEmitter<any> = new EventEmitter<any>();
-  
+
   constructor() { }
 
   ngOnInit() {
-    
+
   }
   goBack(){
     this.BackBtn.emit(true);

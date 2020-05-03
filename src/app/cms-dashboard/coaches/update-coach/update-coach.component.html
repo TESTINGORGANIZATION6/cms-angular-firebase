@@ -1,7 +1,7 @@
 <div class="card form-page-wrap">
   <form #userForm="ngForm" (ngSubmit)="SaveUser(userForm)" [mustMatch]="['password', 'confirmPassword']">
     <div class="card-header">
-      <h1 class="float-left card-header-title"> {{isCreate ?"Create Player":'Update Player'}}</h1>
+      <h1 class="float-left card-header-title"> {{isCreate ?"Create Coach":'Update Coach'}}</h1>
       <div class="float-right">
         <button class="btn btn-primary m-2" type="submit" id="n-user-add-save">Save</button>
         <button class="btn btn-secondary m-2" (click)="Cancel()" id="n-user-add-cancel">Cancel</button>
@@ -10,11 +10,16 @@
     </div>
     <div class="card-body">
       <div class="col-lg-12">
-        <div class="form-group row" *ngIf='teams.length >0' [ngClass]="{ 'has-error' : (submitted && team.invalid) }">
+        <div  *ngIf='teams.length >0'>
+          <input type="checkbox" (change)="addteam = !addteam" id="addteam" [checked]='addteam' name="addteam">
+          <label for="addteam">Add Team</label>
+        </div>
+        <div class="form-group row" *ngIf='addteam' [ngClass]="{ 'has-error' : (submitted && team.invalid) }">
           <label for="team" class="col-sm-3 control-label">Team</label>
           <div class="col-sm-4">
             <select id="userRole" name="userRole" class="form-control" required [(ngModel)]="user.team" #team="ngModel">
-              <option *ngFor="let team of teams" [value]="team.id">{{team.Name}}</option>
+              <option  [value]="null" disabled>Select team</option>
+              <option *ngFor="let team of teams" [value]="team._id">{{team.name}}</option>
             </select>
           </div>
         </div>
@@ -25,7 +30,12 @@
               {{user.firstName}}
             </label> -->
             <input type="text" name="firstName" class="form-control" required [(ngModel)]="user.firstName"
-              #firstName="ngModel">
+              #firstName="ngModel" [ngClass]="{ 'is-invalid': submitted && firstName.invalid }">
+              <div class="invalid-feedback" *ngIf="userForm.submitted && firstName.invalid" >
+                <p *ngIf="firstName.errors.required" >
+                 First Name required.
+                </p>
+              </div>
           </div>
         </div>
         <div class="form-group row" [ngClass]="{ 'has-error' : (submitted && lastName.invalid) }">
@@ -35,7 +45,12 @@
               {{user.lastName}}
             </label> -->
             <input type="text" name="lastName" class="form-control" required [(ngModel)]="user.lastName"
-              #lastName="ngModel">
+              #lastName="ngModel" [ngClass]="{ 'is-invalid': submitted && lastName.invalid }">
+              <div class="invalid-feedback" *ngIf="userForm.submitted && lastName.invalid" >
+                <p *ngIf="lastName.errors.required" >
+                  Last Name required.
+                </p>
+              </div>
           </div>
         </div>
         <div class="form-group row">
@@ -46,9 +61,14 @@
             <!-- <label for="age" *ngIf="!createNew" class="col-md-9 control-label">
               {{user.age}}
             </label> -->
-            <input type="number" name="age" class="form-control" required [(ngModel)]="user.age" #age="ngModel">
+            <input type="number" name="age" class="form-control" required [(ngModel)]="user.age" #age="ngModel" [ngClass]="{ 'is-invalid': submitted && age.invalid }">
+            <div class="invalid-feedback" *ngIf="userForm.submitted && age.invalid" >
+              <p *ngIf="age.errors.required" >
+                Age is required.
+              </p>
+            </div>
           </div>
-          <div class="col-sm-5"></div>
+
         </div>
         <div class="form-group row">
           <label for="email" class="col-sm-3 control-label">
@@ -58,9 +78,14 @@
             <!-- <label for="email" *ngIf="!createNew" class="col-md-9 control-label">
               {{user.email}}
             </label> -->
-            <input type="email" name="email" class="form-control" required [(ngModel)]="user.email" #email="ngModel">
+            <input type="email" name="email" class="form-control" required [(ngModel)]="user.email" #email="ngModel" [ngClass]="{ 'is-invalid': submitted && email.invalid }">
+            <div class="invalid-feedback" *ngIf="userForm.submitted && email.invalid" >
+              <p *ngIf="email.errors.required" >
+                Email is required.
+              </p>
+            </div>
           </div>
-          <div class="col-sm-5"></div>
+
         </div>
         <div class="form-group row"
           [ngClass]="{ 'has-error' : (password.errors?.minlength) || (password.errors?.maxlength) }">
@@ -68,17 +93,28 @@
             {{isCreate ?"Password":'Reset Password'}}
           </label>
           <div class="col-sm-4">
-            <input type="password" name="password" class="form-control" [(ngModel)]="user.password" #password="ngModel"
-              placeholder="Password" minlength="8" maxlength="20" />
+            <input type="password" name="password" class="form-control" [required]="isCreate" [(ngModel)]="user.password" #password="ngModel"
+              placeholder="Password" minlength="8" maxlength="20" [ngClass]="{ 'is-invalid': submitted && password.invalid }"/>
+              <div class="invalid-feedback" *ngIf="submitted && password.invalid" >
+                <p *ngIf="password.errors.required" >
+                  Password is required.
+                </p>
+                <p *ngIf="password.errors.minlength" class="error-msg help-block">
+                  Password can not be less than 8 characters
+                </p>
+                <p *ngIf="password.errors.maxlength" class="error-msg help-block">
+                  Password can not be more than 20 characters.
+                </p>
+              </div>
           </div>
-          <div class="col-sm-5">
+          <!-- <div class="col-sm-5">
             <p *ngIf="password.errors?.minlength" class="error-msg help-block">
               Password can not be less than 8 characters
             </p>
             <p *ngIf="password.errors?.maxlength" class="error-msg help-block">
               Password can not be more than 20 characters.
             </p>
-          </div>
+          </div> -->
         </div>
         <div class="form-group row"
           [ngClass]="{ 'has-error' : (user.confirmPassword !== user.password) || (confirmPassword.errors?.maxlength) || (confirmPassword.errors?.minlength)} ">
@@ -86,10 +122,18 @@
             Confirm Password
           </label>
           <div class="col-sm-4">
-            <input type="password" name="confirmPassword" minlength="8" maxlength="20" class="form-control"
-              [(ngModel)]="user.confirmPassword" #confirmPassword="ngModel" placeholder="Confirm Password" />
-          </div>
-          <div class="col-sm-5">
+            <input type="password" name="confirmPassword" [required]="isCreate" minlength="8" maxlength="20" class="form-control"
+              [(ngModel)]="user.confirmPassword" #confirmPassword="ngModel" placeholder="Confirm Password" [ngClass]="{ 'is-invalid': submitted && confirmPassword.invalid }"/>
+              <div class="invalid-feedback" *ngIf="submitted && confirmPassword.invalid" >
+                <p *ngIf="confirmPassword.errors.required" >
+                  Confirm Password is required.
+                </p>
+                 <p *ngIf="(user.confirmPassword !== user.password)" class="error-msg help-block">
+                  Confirm Password and Password should match
+                </p>
+              </div>
+            </div>
+          <!-- <div class="col-sm-5">
             <p *ngIf="(user.confirmPassword !== user.password)" class="error-msg help-block">
               Confirm Password and Password should match
             </p>
@@ -99,7 +143,7 @@
             <p *ngIf="confirmPassword.errors?.minlength" class="error-msg help-block">
               Password can not be less than 8 characters
             </p>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

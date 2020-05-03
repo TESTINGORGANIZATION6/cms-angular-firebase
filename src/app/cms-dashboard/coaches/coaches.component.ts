@@ -53,12 +53,13 @@ export class CoachesComponent implements OnInit {
     this.createNew = false;
   }
   updateStatus(coachData){
-  var url=environment.apiHost + this.usersEnums.UsersWebApis.updateCoachStatus +'/'+coachData._id+"/"+this.userdata._id; 
+  var url=environment.apiHost + this.usersEnums.UsersWebApis.updateCoachStatus +'/'+coachData._id+"/"+this.userdata._id;
     this.csmUserdataService.AdminPortalPutApi(url, null).subscribe((data:any)=>{
       if(data.status){
         showalert.simpleAlert('error', 'Somthing went wrong!', 'error')
       }else{
-        showalert.simpleAlert('success', 'Status Updated Successfully', 'success')
+        showalert.simpleAlert('success', 'Status Updated Successfully', 'success');
+        this.getAllcoaches(this.SortingOptions.currentPage);
       }
     })
 }

@@ -1,0 +1,148 @@
+<div class="card form-page-wrap">
+  <form #teamForm="ngForm"  [mustMatch]="['password', 'confirmPassword']">
+    <div class="card-header">
+      <h1 class="float-left card-header-title"> Create Team</h1>
+      <div class="float-right">
+        <button class="btn btn-primary m-2" type="submit" (click)="createTeam(teamForm)" id="n-user-add-save">Save</button>
+        <button class="btn btn-secondary m-2" (click)="Cancel()" id="n-user-add-cancel" >Cancel</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="card-body">
+      <div class="col-lg-12">
+        <p>(Note:- Please add age to enable add players of specific age)</p>
+        <div  class="form-group row" [ngClass]="{ 'has-error' : (submitted && teamName.invalid) }">
+          <label for="firstName" class="col-sm-3 control-label">Name</label>
+          <div class="col-sm-4">
+            <!-- <label  for="firstName" class="col-md-9 control-label">
+              {{user.firstName}}
+            </label> -->
+            <input type="text" name="Name" class="form-control" required [(ngModel)]="team.teamName"
+            #teamName="ngModel" [ngClass]="{ 'is-invalid': submitted && teamName.invalid }">
+            <div class="invalid-feedback" *ngIf="submitted && teamName.invalid" >
+              <p *ngIf="teamName.errors.required" >
+               Team Name required.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div  class="form-group row" [ngClass]="{ 'has-error' : (submitted && teamName.invalid) }">
+          <label for="description" class="col-sm-3 control-label">Description</label>
+          <div class="col-sm-4">
+            <!-- <label  for="firstName" class="col-md-9 control-label">
+              {{user.firstName}}
+            </label> -->
+            <textarea type="text" name="Name"  class="form-control" required [(ngModel)]="team.description"
+            #description="ngModel"></textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+          <label for="age" class="col-sm-3 control-label">
+            Age
+          </label>
+          <div class="col-sm-4">
+            <!-- <label for="age" *ngIf="!createNew" class="col-md-9 control-label">
+              {{user.age}}
+            </label> -->
+            <input type="number"  name="age" (focusout)='loadPlayers()' class="form-control" required [(ngModel)]="team.age"
+            #agegroup="ngModel"  [ngClass]="{ 'is-invalid': submitted && agegroup.invalid }">
+            <div class=" invalid-feedback" *ngIf="submitted && agegroup.invalid" >
+              <p *ngIf="agegroup.errors?.required" >
+                Age group is required.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row"  [ngClass]="{ 'has-error' : (submitted && coach.invalid) }">
+          <label for="coach" class="col-sm-3 control-label">Assing Coach</label>
+          <div class="col-sm-4">
+              <select id="coach" name="coach" class="form-control" required [(ngModel)]="team.coach"
+                #coach="ngModel" [ngClass]="{ 'is-invalid': submitted && coach.invalid }">
+                <option  [value]="null" disabled>select coach</option>
+                 <option *ngFor="let coach of coachList" [value]="coach._id">{{coach.firstname}}</option>
+              </select>
+              <div class=" invalid-feedback" *ngIf="submitted && coach.invalid" >
+                <p *ngIf="coach.errors?.required" >
+                Please select coach.
+                </p>
+              </div>
+          </div>
+        </div>
+
+
+        <button class="btn btn-primary " (click)='AddStaffmember()'  id="n-user-add-save">{{isEditTeam?"Modify Staff":"Add Staff"}}</button>
+        <button class="btn btn-primary m-4" (click)='addPlayers()' [disabled]='playerData.length==0'  id="n-user-add-save">{{isEditTeam?"Modify players":"Add players"}}</button>
+        <!-- <input type="checkbox" class='checkStaff' (change)="addStaff=!addStaff" id="staff" name="Add Staff">
+        <label for="staff">Add Staff</label> -->
+        <mat-card *ngIf='addStaff' class="m-2">
+          <p>
+            <mat-form-field class="example-full-width">
+            <mat-label>Name</mat-label>
+            <input matInput name="name" [(ngModel)]="staff.name" #name>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Designation</mat-label>
+            <input matInput name="designation" [(ngModel)]="staff.designation" #designation>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Contact</mat-label>
+            <input matInput name="contact" [(ngModel)]="staff.contact" #contact>
+          </mat-form-field>
+          <button class="btn btn-primary " (click)='AddMember()'  id="n-user-add-save">Add</button>
+        </p>
+        <table class="table table-striped" *ngIf='allStafList.length >0'>
+          <thead>
+            <tr>
+              <th style=" cursor:pointer; text-align: center;">Name</th>
+              <th style="cursor:pointer; text-align: center;">Designation</th>
+              <th style="cursor:pointer; text-align:center;" >Contact </th>
+              <th style="cursor:pointer; text-align:center;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let staff of allStafList; let i = index;" class="gradex">
+              <td  class="align-middle"  style="text-align: center;" >{{staff.name}}</td>
+              <td  class="align-middle"  style="text-align: center;"  > {{staff.designation}}</td>
+              <td  class="align-middle"  style="text-align: center;"  > {{staff.contact}}</td>
+              <td   style="text-align: center;">
+                <button type="button" class="btn btn-primary m-2" (click)="editStaff(staff, i)">edit</button>
+                <button type="button" class="btn btn-primary m-2" (click)="deleteStaff(i)" >Delete</button>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+        </mat-card>
+        <mat-card *ngIf='addplayer' class="m-2">
+          <h2 class="m-2">player list</h2>
+          <p class="float-right">Added Players : {{addedPlayers.length}}</p>
+          <table class="table table-striped" *ngIf='playerData.length >0'>
+            <thead>
+              <tr>
+                <th style=" cursor:pointer; text-align: center;">First Name</th>
+                <th style="cursor:pointer; text-align: center;">Last Name</th>
+                <th style="cursor:pointer; text-align:center;" >Age </th>
+                <th style="cursor:pointer; text-align:center;">Position</th>
+                <th style="cursor:pointer; ">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let player of playerData; let i = index;" class="gradex">
+                <td  class="align-middle"  style="text-align: center;" >{{player.firstname}}</td>
+                <td  class="align-middle"  style="text-align: center;"  > {{player.lastname}}</td>
+                <td  class="align-middle"  style="text-align: center;"  > {{player.age}}</td>
+                <td  class="align-middle"  style="text-align: center;"  > {{player.position}}</td>
+                <td  >
+                  <button type="button" class="btn btn-primary m-2" (click)="AddorRemove(player, $event)">{{player.isadded?'Remove':'Add'}}</button>
+                  <!-- <button type="button" class="btn btn-primary m-2" (click)="deleteStaff(i)" >Delete</button> -->
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </mat-card>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- <lm-ap-alert *ngIf="showAlert" [type]="alertType" [text]="alertText" (OnConfirm)="Ok();"></lm-ap-alert> -->

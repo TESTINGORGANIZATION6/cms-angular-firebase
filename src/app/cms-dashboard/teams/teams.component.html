@@ -1,4 +1,4 @@
-<div class="body-section" *ngIf="!isteamedit">
+<div class="body-section" *ngIf="!hideTeams">
   <div class='body-content-wrap'>
     <div class="card">
       <div class="card-header">
@@ -18,6 +18,12 @@
                   Name
                   <!-- <em class="material-icons {{PasskeysortingOptions.columnName === 'Passkey'?'sort-focus-in':''}}" aria-hidden="true">
                     {{PasskeysortingOptions.columnName === 'Passkey' && (PasskeysortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
+                  </em> -->
+                </th>
+                <th style="cursor:pointer; text-align: left;" (click)="SetSortingOptions('UserName')">
+                Description
+                  <!-- <em class="material-icons {{PasskeysortingOptions.columnName === 'UserName'?'sort-focus-in':''}}" aria-hidden="true">
+                    {{PasskeysortingOptions.columnName === 'UserName' && (PasskeysortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
                   </em> -->
                 </th>
                 <th style="cursor:pointer; text-align: left;" (click)="SetSortingOptions('UserName')">
@@ -45,6 +51,24 @@
                   </em>
                 </th>
                 <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('RedemptionDate')">
+                  Team Staff
+                    <!-- <em class="material-icons {{PasskeysortingOptions.columnName === 'RedemptionDate'?'sort-focus-in':''}}" aria-hidden="true">
+                      {{PasskeysortingOptions.columnName === 'RedemptionDate' && (PasskeysortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
+                    </em> -->
+                    <em class="material-icons " aria-hidden="true">
+
+                    </em>
+                  </th>
+                <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('RedemptionDate')">
+                  Created At
+                    <!-- <em class="material-icons {{PasskeysortingOptions.columnName === 'RedemptionDate'?'sort-focus-in':''}}" aria-hidden="true">
+                      {{PasskeysortingOptions.columnName === 'RedemptionDate' && (PasskeysortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
+                    </em> -->
+                    <em class="material-icons " aria-hidden="true">
+
+                    </em>
+                  </th>
+                <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('RedemptionDate')">
                   Actions
                     <!-- <em class="material-icons {{PasskeysortingOptions.columnName === 'RedemptionDate'?'sort-focus-in':''}}" aria-hidden="true">
                       {{PasskeysortingOptions.columnName === 'RedemptionDate' && (PasskeysortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
@@ -58,13 +82,17 @@
             <tbody>
 
               <tr *ngFor="let team of teamData" class="gradex">
-                <td  class="align-middle"  style="text-align: left;" >{{team.Name}}</td>
-                <td  class="align-middle"  style="text-align: left;"  > {{team.players}}</td>
+                <td  class="align-middle"  style="text-align: left;" >{{team.name}}</td>
+                <td  class="align-middle"  style="text-align: left;"  > {{team.description}}</td>
+                <td  class="align-middle"  style="text-align: left;"  > {{team.players.length}}</td>
                 <td  class="align-middle"  style="text-align: left;"  > {{team.ageGroup}}</td>
-                <td  class="align-middle"  style="text-align: left;">{{team.coach}}</td>
+                <td  class="align-middle"  style="text-align: left;">{{(team.coach)?team.coach:"-NA-"}}</td>
+                <td  class="align-middle"  style="text-align: left;">{{team.staff.length}}</td>
+                <td  class="align-middle"  style="text-align: left;">{{team.createdAt| date:'medium'}}</td>
                 <td   style="text-align: left;">
-                  <button type="button" class="btn btn-primary m-2" (click)="editTeam()">View</button>
-                  <button type="button" class="btn btn-primary m-2" >Delete</button>
+                  <button type="button" class="btn btn-primary m-2" (click)="ViewTeam(team)">View</button>
+                  <!-- <button type="button" class="btn btn-primary m-2" (click)="editTeam(team)">Edit</button> -->
+                  <button type="button" class="btn btn-primary m-2" (click)='changeStatus(team)' >{{(team.isActive)?"Disable":"Enable"}}</button>
                 </td>
 
                 <!-- <td data-title="PublishedDate" style="text-align: left;">
@@ -78,36 +106,37 @@
             </tbody>
           </table>
         </div>
-        <!-- <div class="adminpagination" id="example_length" *ngIf="PasskeypagingOptions.totalRecords > 25">
+        <div class="adminpagination" id="example_length" *ngIf="PagingOptions.totalRecords > 25">
           <div class="row-per-page form-inline">
-            <select id="ddrRowsPerPage" [(ngModel)]="PasskeyRowsPerPage" (ngModelChange)="SetTotalPagesPasskey()" tabindex="0" class="form-control">
-              <option *ngFor="let o of PasskeypagingOptions.pageSizes" [ngValue]="o" [innerText]="o"></option>
+            <select id="ddrRowsPerPage" [(ngModel)]="RowsPerPage" (ngModelChange)="SetTotalPages()" tabindex="0" class="form-control">
+              <option *ngFor="let o of PagingOptions.pageSizes" [ngValue]="o" [innerText]="o"></option>
             </select>
             <label>
-              <span [innerText]="GetPasskeyPagingText()"></span>
+              <span [innerText]="GetPagingText()"></span>
             </label>
           </div>
           <div class="sp-slider-wrapper">
             <nav class="page-nav-wrap">
-              <button id="pagingminus" href="javascript:void(0)" aria-label="previous page" tabindex="0" (click)="loadPasskeys(PasskeypagingOptions.currentPage - 1)" [disabled]="!(PasskeypagingOptions.currentPage >= 2)"
-                [class]="PasskeypagingOptions.currentPage >= 2 ? 'page-nav-btn sp-prev':'page-nav-btn sp-prev'">
+              <button id="pagingminus" href="javascript:void(0)" aria-label="previous page" tabindex="0" (click)="loadTeams(PagingOptions.currentPage - 1)" [disabled]="!(PagingOptions.currentPage >= 2)"
+                [class]="PagingOptions.currentPage >= 2 ? 'page-nav-btn sp-prev':'page-nav-btn sp-prev'">
                 <em class="material-icons" aria-hidden="true">play_arrow</em>
               </button>
-              <button id="pagingplus" href="javascript:void(0)" aria-label="next page" tabindex="0" (click)="loadPasskeys(PasskeypagingOptions.currentPage + 1)" [disabled]="!(PasskeypagingOptions.currentPage < PasskeypagingOptions.totalPages)"
-                [class]="PasskeypagingOptions.currentPage < PasskeypagingOptions.totalPages ? 'page-nav-btn sp-next':'page-nav-btn sp-next'">
+              <button id="pagingplus" href="javascript:void(0)" aria-label="next page" tabindex="0" (click)="loadTeams(PagingOptions.currentPage + 1)" [disabled]="!(PagingOptions.currentPage < PagingOptions.totalPages)"
+                [class]="PagingOptions.currentPage < PagingOptions.totalPages ? 'page-nav-btn sp-next':'page-nav-btn sp-next'">
                 <em class="material-icons" aria-hidden="true">play_arrow</em>
               </button>
             </nav>
             <div class="sp-slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
               <a class="ui-slider-handle ui-state-default ui-corner-all disabledAnchor" style="left: 0%;">
-                <span>{{PasskeypagingOptions.currentPage}}</span>
+                <span>{{PagingOptions.currentPage}}</span>
               </a>
             </div>
           </div>
           <div class="clearfix"></div>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
 </div>
-<app-update-teams *ngIf='isteamedit' [action]='' (BackBtn)="backToteams($event)"> </app-update-teams>
+<app-update-teams *ngIf='isteameView' [teamData]='selectedTeam'  (BackBtn)="backToteams($event)"> </app-update-teams>
+<app-create-team *ngIf="isNewTeam" [userData]='userData' [isEditTeam]='isteamedit' [teamData]='selectedTeam' (BackBtn)="backToteams($event)"></app-create-team>

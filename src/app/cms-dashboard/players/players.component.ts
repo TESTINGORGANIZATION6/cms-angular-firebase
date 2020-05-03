@@ -3,6 +3,7 @@ import {CsmUserdataService} from '../../csm-userdata.service';
 import * as UsersEnums from '../../cms-login/cms-login-enum';
 import {environment} from '../../../environments/environment';
 import { CommonPaginationService} from '../../helpers/pagination.service';
+import * as showalert from '../../helpers/sweetalert';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class PlayersComponent implements OnInit {
   playerData:any=[];
   userData:any;
   usersEnums = UsersEnums;
-  updateplayer=false;  
+  updateplayer=false;
   createNewPlayer=false;
   editplayer:any;
   teams;
@@ -27,17 +28,17 @@ export class PlayersComponent implements OnInit {
   constructor(private csmUserdataService: CsmUserdataService, private commonPaginationService:CommonPaginationService) { }
 
 
-  ngOnInit() { 
+  ngOnInit() {
     this.ResetPaging();
     this.csmUserdataService.getUserData().subscribe(data=>{
       if(data){
         this.userData=data;
-        
+
         this.getAllplayers(1);
       }
     })
-      
- 
+
+
   }
 
 
@@ -47,7 +48,7 @@ export class PlayersComponent implements OnInit {
       if (data != ""){
          this.playerData = data.result;
          this.SetPaging(pageNo, data.totalPages)
-        // this.teams=data.userdata.teams;  
+        // this.teams=data.userdata.teams;
       }
     })
   }
@@ -91,11 +92,23 @@ export class PlayersComponent implements OnInit {
     SetSortingOptions(columnName: any) {
     this.commonPaginationService.SetSortingOptions(this.SortingOptions, columnName);
     // this.loadAllBatches(this.batchPagingOptions.currentPage);
-    this.getAllplayers(this.PagingOptions.currentPage)
+    this.getAllplayers(this.PagingOptions.currentPage);
     }
     SetTotalPages() {
     this.PagingOptions.pageSize = this.RowsPerPage;
     this.PagingOptions.totalPages = Math.ceil(this.PagingOptions.totalRecords / parseInt(this.PagingOptions.pageSize, 10));
     // this.loadAllBatches(1);
+    }
+
+    updateStatus(playerdata){
+      var url=environment.apiHost + this.usersEnums.UsersWebApis.updatePlayerStatus +'/'+playerdata._id+"/"+this.userData._id;
+        this.csmUserdataService.AdminPortalPutApi(url, null).subscribe((data:any)=>{
+          if(data.status){
+            showalert.simpleAlert('error', 'Somthing went wrong!', 'error')
+          }else{
+            showalert.simpleAlert('success', 'Status Updated Successfully', 'success');
+            this.getAllplayers(this.PagingOptions.currentPage);
+          }
+        })
     }
 }

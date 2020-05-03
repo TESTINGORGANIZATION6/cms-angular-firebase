@@ -7,6 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule, MatButtonModule, MatSelectModule, MatIconModule } from '@angular/material';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatCardModule} from '@angular/material/card';
+import {MatTableModule} from '@angular/material/table';
 import { CmsLoginComponent } from './cms-login/cms-login.component';
 import { CmsDashboardComponent } from './cms-dashboard/cms-dashboard.component';
 import { CmsHeaderComponent } from './cms-header/cms-header.component';
@@ -25,6 +27,8 @@ import { ScoutsComponent } from './portfolio-dashboard/scouts/scouts.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import {LoadingScreenInterceptor} from './helpers/intersepter';
 import { RegisterAdminComponent } from './register-admin/register-admin.component';
+import { CreateTeamComponent } from './cms-dashboard/teams/create-team/create-team.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -45,7 +49,8 @@ import { RegisterAdminComponent } from './register-admin/register-admin.componen
     PortfolioDashboardComponent,
     UserprofilesComponent,
     ScoutsComponent,
-    RegisterAdminComponent
+    RegisterAdminComponent,
+    CreateTeamComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +64,10 @@ import { RegisterAdminComponent } from './register-admin/register-admin.componen
     HttpClientModule,
     MatTooltipModule,
     NgxSpinnerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCardModule,
+    MatTableModule,
+    MatCheckboxModule
     ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [{

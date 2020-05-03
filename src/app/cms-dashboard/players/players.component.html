@@ -31,7 +31,7 @@
                   <!-- <em class="material-icons {{SortingOptions.columnName === 'age'?'sort-focus-in':''}}" aria-hidden="true">
                     {{SortingOptions.columnName === 'age' && (SortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
                   </em> -->
-              
+
                 </th>
                 <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('email')">
                   Email
@@ -52,7 +52,7 @@
                   </em> -->
                 </th>
                 <th style="cursor:pointer; text-align:left;" (click)="SetSortingOptions('createdAt')">
-                  Created At  
+                  Created At
                   <!-- <em class="material-icons {{SortingOptions.columnName === 'createdAt'?'sort-focus-in':''}}" aria-hidden="true">
                     {{SortingOptions.columnName === 'createdAt' && (SortingOptions.columnOrder === 'ASC'?'arrow_drop_up':'arrow_drop_down')}}
                   </em> -->
@@ -70,11 +70,11 @@
                 <td  class="align-middle" style="text-align: left;">{{player.age}}</td>
                 <td  class="align-middle" style="text-align: left;"  > {{player.email}}</td>
                 <td  class="align-middle" style="text-align: left;"  > {{player.position}}</td>
-                <td  class="align-middle" style="text-align: left;">{{(player.team)?player.team:"-NA-"}}</td>
+                <td  class="align-middle" style="text-align: left;">{{(player.team)?player.team.name:"-NA-"}}</td>
                 <td  class="align-middle" style="text-align: left;">{{player.createdAt | date:'medium'}}</td>
                 <td  style="text-align: left;">
                   <button type="button" class="btn btn-primary m-2" (click)='editPlayer(player)'>Edit</button>
-                  <button type="button" class="btn btn-primary m-2">Delete</button>
+                  <button type="button" class="btn btn-primary m-2" (click)='updateStatus(player)'>{{(player.isActive)?"Disable":"Enable"}}</button>
                 </td>
 
               </tr>

@@ -16,8 +16,8 @@
                 <span>Name :</span>
               </div>
               <div class="col-7">
-                <span>Swapnil</span>
-                
+                <span>{{teamData.name}}</span>
+
               </div>
             </div>
             <div class="row col">
@@ -25,7 +25,7 @@
                 <span>Age Limit :</span>
               </div>
               <div class="col-7">
-                <span>14</span>
+                <span>{{teamData.ageGroup}}</span>
               </div>
             </div>
           </div>
@@ -35,7 +35,7 @@
                 <span>Coach Name :</span>
               </div>
               <div class="col-7">
-                <span>Akshay</span>
+                <span>{{(teamData.coach)?teamData.coach:'-NA-'}}</span>
               </div>
             </div>
             <div class="row col">
@@ -43,7 +43,7 @@
                 <span>Player Count :</span>
               </div>
               <div class="col-7">
-                <span>30</span>
+                <span>{{teamData.players.length}}</span>
               </div>
             </div>
           </div>
@@ -51,30 +51,64 @@
         <section id="tabs">
 
             <!-- <h6 class="section-title h1">Tabs</h6> -->
-            
+
                 <nav>
                   <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Add Players</a>
-                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Add Staff</a>
-                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Assign Coach</a>
+                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Show Players</a>
+                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Show Staff</a>
+
                     <!-- <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">About</a> -->
                   </div>
                 </nav>
                 <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
                   <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                    Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
+                    <table class="table table-striped" *ngIf='teamData.players.length >0'>
+                      <thead>
+                        <tr>
+                          <th style=" cursor:pointer; text-align: center;">First Name</th>
+                          <th style="cursor:pointer; text-align: center;">Last Name</th>
+                          <th style="cursor:pointer; text-align:center;" >Age </th>
+                          <th style="cursor:pointer; text-align:center;">Position</th>
+                          <th style="cursor:pointer; ">Email</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let player of teamData.players; let i = index;" class="gradex">
+                          <td  class="align-middle"  style="text-align: center;" >{{player.firstname}}</td>
+                          <td  class="align-middle"  style="text-align: center;"  > {{player.lastname}}</td>
+                          <td  class="align-middle"  style="text-align: center;"  > {{player.age}}</td>
+                          <td  class="align-middle"  style="text-align: center;"  > {{player.position}}</td>
+                          <td  class="align-middle"  style="text-align: center;"  > {{player.email}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <p class="norecord" *ngIf='teamData.players.length ==0'>No player Added</p>
                   </div>
                   <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                    Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
+                    <table class="table table-striped" *ngIf='teamData.staff.length >0'>
+                      <thead>
+                        <tr>
+                          <th style=" cursor:pointer; text-align: center;">Name</th>
+                          <th style="cursor:pointer; text-align: center;">Designation</th>
+                          <th style="cursor:pointer; text-align:center;" >Contact </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let staff of teamData.staff; let i = index;" class="gradex">
+                          <td  class="align-middle"  style="text-align: center;" >{{staff.name}}</td>
+                          <td  class="align-middle"  style="text-align: center;"  > {{staff.designation}}</td>
+                          <td  class="align-middle"  style="text-align: center;"  > {{staff.contact}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <p class="norecord" *ngIf='teamData.staff.length ==0'>No Staff Added</p>
                   </div>
-                  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                    Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
-                  </div>
+
                   <!-- <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
                     Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
                   </div> -->
                 </div>
-              
+
               <!-- </div>
             </div> -->
           <!-- </div> -->
