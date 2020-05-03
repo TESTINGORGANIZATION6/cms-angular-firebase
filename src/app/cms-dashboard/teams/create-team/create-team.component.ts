@@ -61,7 +61,7 @@ addedPlayers=[];
 // }}
     this.csmUserdataService.AdminPortalPostApi(url, params).subscribe((data:any)=>{
       if(data.status){
-
+    showalert.simpleAlert('error', 'Somthing went wrong!', 'error');
       }else{
         showalert.simpleAlert('success', 'Team Created Successfully', 'success');
         this.Cancel();
